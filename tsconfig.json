@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "module": "es6",
+    "target": "es5",
+    "jsx": "react",
+    "allowJs": false,
+    "declaration": true,
+    "checkJs": false,
+    "maxNodeModuleJsDepth": 1,
+    "lib": [
+      "dom",
+      "es5",
+      "scripthost",
+      "dom"
+    ]
+  }
+}
