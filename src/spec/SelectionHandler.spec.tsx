@@ -109,6 +109,7 @@ const mockGetSelection = (type: string, text: string, domRectListMock: DomRectLi
     return obj
   }, {}) as unknown as DOMRectList
 
+
   window.getSelection = () => {
 
     const mockRange = {

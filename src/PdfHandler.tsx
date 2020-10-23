@@ -1,13 +1,15 @@
-import { FunctionComponent, RefObject, useEffect, useState } from 'react'
-// @ts-ignore
-import { Document, Page } from 'react-pdf/dist/esm/entry.webpack'
-import { FixedSizeList, ListChildComponentProps } from 'react-window'
-import * as React from 'react'
-import { SelectionHandler } from './SelectionHandler'
-import { SelectionRegion } from './SelectionRegion'
-import { TextSelection } from './TextSelection'
-import { Highlight } from './Highlight'
+import { FunctionComponent, RefObject, useEffect, useState } from 'react';
+import { Document, Page } from 'react-pdf';
+import { FixedSizeList, ListChildComponentProps } from 'react-window';
+import * as React from 'react';
+import { SelectionHandler } from './SelectionHandler';
+import { SelectionRegion } from './SelectionRegion';
+import { TextSelection } from './TextSelection';
+import { Highlight } from './Highlight';
 
+import { pdfjs } from 'react-pdf';
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
 interface PdfHandlerProps {
   url: string,
@@ -17,7 +19,7 @@ interface PdfHandlerProps {
 }
 
 const PdfHandler: FunctionComponent<PdfHandlerProps> = ({ url, highlights, goToHighlight, onTextSelection }) => {
-  const [documentPageNumber, setDocumentPageNumber] = useState<number>(0);
+  const [documentPageNumber, setDocumentPageNumber] = useState<number>(0)
   const gridRef: RefObject<FixedSizeList> = React.createRef()
 
   const showHighlights = (pageNumber: number) => {
@@ -36,14 +38,14 @@ const PdfHandler: FunctionComponent<PdfHandlerProps> = ({ url, highlights, goToH
   }
 
   function removeTextLayerOffset() {
-    const textLayers = document.querySelectorAll(".react-pdf__Page__textContent");
+    const textLayers = document.querySelectorAll('.react-pdf__Page__textContent')
     textLayers.forEach(layer => {
       // @ts-ignore
-      const { style } = layer;
-      style.top = "0";
-      style.left = "0";
-      style.transform = "";
-    });
+      const { style } = layer
+      style.top = '0'
+      style.left = '0'
+      style.transform = ''
+    })
   }
 
   const PageHandler: FunctionComponent<ListChildComponentProps> = ({ index, style }) => {
@@ -64,15 +66,15 @@ const PdfHandler: FunctionComponent<PdfHandlerProps> = ({ url, highlights, goToH
   }
 
   useEffect(() => {
-    if (!goToHighlight || !gridRef.current) {
+    if (!goToHighlight || !gridRef.current || !goToHighlight.selectionRectangles || !goToHighlight.selectionRectangles[0].pageNumber) {
       return
     }
 
     gridRef.current.scrollToItem(goToHighlight.selectionRectangles[0].pageNumber - 1)
   })
 
-  function onDocumentLoadSuccess({ numPages } : {numPages: number}) {
-    setDocumentPageNumber(numPages);
+  function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
+    setDocumentPageNumber(numPages)
   }
 
   return (

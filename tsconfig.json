@@ -3,10 +3,10 @@
     "outDir": "./dist/",
     "sourceMap": true,
     "noImplicitAny": true,
-    "module": "es6",
+    "module": "commonjs",
     "target": "es5",
     "jsx": "react",
-    "allowJs": false,
+    "allowJs": true,
     "declaration": true,
     "checkJs": false,
     "maxNodeModuleJsDepth": 1,
@@ -15,6 +15,18 @@
       "es5",
       "scripthost",
       "dom"
-    ]
-  }
+    ],
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": false,
+    "noEmit": false
+  },
+  "include": [
+    "src"
+  ]
 }

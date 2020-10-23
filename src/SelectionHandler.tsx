@@ -10,11 +10,19 @@ interface SelectionHandlerProps {
 const SelectionHandler: FunctionComponent<SelectionHandlerProps> = ({ onTextSelection, children }) => {
   const ref = useRef(null)
   const getSelection = () => {
+    if (!ref || !ref.current || !onTextSelection) {
+      return
+    }
+
+    // @ts-ignore
     const regionsNodeList = ref.current.querySelectorAll('div[data-region-selector-id]')
     const regionElements = Array.prototype.slice.call(regionsNodeList)
-    const selection = window.getSelection()
+    let selection = null;
+    if (window) {
+      selection = window.getSelection()
+    }
 
-    if (selection.type !== 'Range') {
+    if (!selection || selection.type !== 'Range') {
       return
     }
 
@@ -22,7 +30,7 @@ const SelectionHandler: FunctionComponent<SelectionHandlerProps> = ({ onTextSele
 
       const cleanedRectangles: SelectionRectangle[] = []
 
-      rectangles.map( (rectangle) => {
+      rectangles.map((rectangle) => {
         const innerRectangles = rectangles.filter((rectangleFilter) => rectangle.pageNumber === rectangleFilter.pageNumber
           && rectangle.top < rectangleFilter.top
           && rectangleFilter.top + rectangleFilter.height < rectangle.top + rectangle.height
@@ -30,13 +38,13 @@ const SelectionHandler: FunctionComponent<SelectionHandlerProps> = ({ onTextSele
           && rectangleFilter.left + rectangleFilter.width < rectangle.left + rectangle.width
         )
 
-        if (innerRectangles.length === 0){
-          cleanedRectangles.push(rectangle);
+        if (innerRectangles.length === 0) {
+          cleanedRectangles.push(rectangle)
         }
 
-      });
+      })
 
-      return cleanedRectangles;
+      return cleanedRectangles
     }
 
     const selectionDomRectList = selection.getRangeAt(0).getClientRects()
@@ -60,6 +68,7 @@ const SelectionHandler: FunctionComponent<SelectionHandlerProps> = ({ onTextSele
     )
 
     onTextSelection({ text: selection.toString(), selectionRectangles: cleanRectanglesSelection(selectionRectangles) })
+
   }
 
   return (<div ref={ref} onMouseUp={getSelection}>{children}</div>)

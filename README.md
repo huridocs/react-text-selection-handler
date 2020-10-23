@@ -26,3 +26,9 @@ You can also import the type definitions if you're using TypeScript like so:
 import PdfHandler, { IPdfHandlerProps } from 'PdfHandler'
 ...
 ```
+
+## Compiling with babel
+yarn babel -D -d dist/ src/* --extensions ".ts,.tsx" 
+
+## Using module in other project
+yarn add file:PATH/react-pdf-handler
