@@ -1,5 +1,5 @@
 {
-  "name": "react-pdf-handler",
+  "name": "react-pdf-renderer",
   "version": "1.0.0",
   "main": "./dist/index.js",
   "description": "React pdf handler",
