@@ -1,13 +1,14 @@
-import { FunctionComponent, RefObject, useEffect, useState } from 'react';
-import { Document, Page } from 'react-pdf';
-import { FixedSizeList, ListChildComponentProps } from 'react-window';
-import * as React from 'react';
-import { SelectionHandler } from './SelectionHandler';
-import { SelectionRegion } from './SelectionRegion';
-import { TextSelection } from './TextSelection';
-import { Highlight } from './Highlight';
+import { FunctionComponent, RefObject, useEffect, useState } from 'react'
+import { FixedSizeList, ListChildComponentProps } from 'react-window'
+import * as React from 'react'
+import { SelectionHandler } from './SelectionHandler'
+import { SelectionRegion } from './SelectionRegion'
+import { TextSelection } from './TextSelection'
+import { Highlight } from './Highlight'
 
-import { pdfjs } from 'react-pdf';
+import { pdfjs } from 'react-pdf'
+
+export const browserRendering = typeof document !== 'undefined'
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
@@ -49,20 +50,23 @@ const PdfHandler: FunctionComponent<PdfHandlerProps> = ({ url, highlights, goToH
   }
 
   const PageHandler: FunctionComponent<ListChildComponentProps> = ({ index, style }) => {
-    return (
-      <div style={style}>
-        <SelectionRegion regionId={(index + 1).toString()}>
-          <Page
-            height={850}
-            onLoadError={(error: any) => console.error(error)}
-            pageNumber={index + 1}
-            onLoadSuccess={removeTextLayerOffset}
-            renderMode={'svg'}>
-            {showHighlights(index + 1)}
-          </Page>
-        </SelectionRegion>
-      </div>
-    )
+    if (browserRendering) {
+      const { Page } = require('react-pdf')
+      return (
+        <div style={style}>
+          <SelectionRegion regionId={(index + 1).toString()}>
+            <Page
+              height={850}
+              onLoadError={(error: any) => console.error(error)}
+              pageNumber={index + 1}
+              onLoadSuccess={removeTextLayerOffset}
+              renderMode={'svg'}>
+              {showHighlights(index + 1)}
+            </Page>
+          </SelectionRegion>
+        </div>
+      )
+    }
   }
 
   useEffect(() => {
@@ -77,21 +81,24 @@ const PdfHandler: FunctionComponent<PdfHandlerProps> = ({ url, highlights, goToH
     setDocumentPageNumber(numPages)
   }
 
-  return (
-    <SelectionHandler onTextSelection={onTextSelection}>
-      <Document file={url} onLoadSuccess={onDocumentLoadSuccess}>
-        <FixedSizeList
-          height={850}
-          itemCount={documentPageNumber}
-          itemSize={850}
-          width={640}
-          ref={gridRef}
-        >
-          {PageHandler}
-        </FixedSizeList>
-      </Document>
-    </SelectionHandler>
-  )
+  if (browserRendering) {
+    const { Document } = require('react-pdf')
+    return browserRendering && (
+      <SelectionHandler onTextSelection={onTextSelection}>
+        <Document file={url} onLoadSuccess={onDocumentLoadSuccess}>
+          <FixedSizeList
+            height={850}
+            itemCount={documentPageNumber}
+            itemSize={850}
+            width={640}
+            ref={gridRef}
+          >
+            {PageHandler}
+          </FixedSizeList>
+        </Document>
+      </SelectionHandler>
+    )
+  }
 }
 
 export { PdfHandler }
