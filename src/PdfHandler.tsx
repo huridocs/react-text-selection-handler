@@ -6,11 +6,10 @@ import { SelectionRegion } from './SelectionRegion'
 import { TextSelection } from './TextSelection'
 import { Highlight } from './Highlight'
 
-import { pdfjs } from 'react-pdf'
+// import { pdfjs } from 'react-pdf'
+// pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
 export const browserRendering = typeof document !== 'undefined'
-
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
 interface PdfHandlerProps {
   url: string,
