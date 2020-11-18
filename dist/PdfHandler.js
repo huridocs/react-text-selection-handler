@@ -1,24 +1,28 @@
-import { FunctionComponent, RefObject, useEffect, useState } from 'react'
-// import { FixedSizeList, ListChildComponentProps } from 'react-window'
-import * as React from 'react'
-import { SelectionHandler } from './SelectionHandler'
-import { SelectionRegion } from './SelectionRegion'
-import { TextSelection } from './TextSelection'
-import { Highlight } from './Highlight'
+"use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.PdfHandler = exports.browserRendering = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+// import { FixedSizeList, ListChildComponentProps } from 'react-window'
 // import { pdfjs } from 'react-pdf'
 // pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
+const browserRendering = typeof document !== 'undefined';
+exports.browserRendering = browserRendering;
 
-export const browserRendering = typeof document !== 'undefined'
-
-interface PdfHandlerProps {
-  url: string,
-  highlights?: TextSelection[],
-  goToHighlight?: TextSelection,
-  onTextSelection?: (textSelection: TextSelection) => any
-}
-
-const PdfHandler: FunctionComponent<PdfHandlerProps> = ({ url, highlights, goToHighlight, onTextSelection }) => {
+const PdfHandler = ({
+  url,
+  highlights,
+  goToHighlight,
+  onTextSelection
+}) => {
   // const [documentPageNumber, setDocumentPageNumber] = useState<number>(0)
   // // const gridRef: RefObject<FixedSizeList> = React.createRef()
   //
@@ -98,7 +102,7 @@ const PdfHandler: FunctionComponent<PdfHandlerProps> = ({ url, highlights, goToH
   //     </SelectionHandler>
   //   )
   // }
-  return <></>
-}
+  return /*#__PURE__*/React.createElement(React.Fragment, null);
+};
 
-export { PdfHandler }
+exports.PdfHandler = PdfHandler;

@@ -19,10 +19,6 @@
     "build": "yarn babel -D -d dist/ src/* --extensions \".ts,.tsx\""
   },
   "dependencies": {
-    "@types/react-pdf": "^4.0.6",
-    "@types/react-window": "^1.8.2",
-    "react-pdf": "^5.0.0",
-    "react-window": "^1.8.5"
   },
   "peerDependencies": {
     "react": ">=16.13.1",

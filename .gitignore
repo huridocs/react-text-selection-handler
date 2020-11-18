@@ -45,7 +45,6 @@ typings/
 .yarn-integrity
 
 # generate output
-dist
 .idea
 
 sample/dist
