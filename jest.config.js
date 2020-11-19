@@ -11,6 +11,6 @@ module.exports = {
   "transform": {
     "^.+\\.(ts|tsx)$": "ts-jest"
   },
-  "setupFilesAfterEnv": ["<rootDir>/src/setupTests.ts"],
+  "setupFilesAfterEnv": ["<rootDir>/setupTests.ts"],
   preset: 'jest-puppeteer',
 }

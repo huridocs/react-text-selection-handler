@@ -19,19 +19,20 @@
     "build": "yarn babel -D -d dist/ src/* --extensions \".ts,.tsx\""
   },
   "dependencies": {
+    "react-dom": "^17.0.1",
+    "react": ">=16.13.1"
   },
   "peerDependencies": {
-    "react": ">=16.13.1",
-    "react-dom": ">=16.13.1"
+    "react": ">=16.13.1"
   },
   "devDependencies": {
-    "file-loader": "^6.1.0",
-    "@types/enzyme-adapter-react-16": "^1.0.6",
-    "copy-webpack-plugin": "^4.5.2",
-    "ts-loader": "^8.0.4",
-    "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.12",
+    "@babel/cli": "7.11.6",
+    "@babel/core": "7.11.6",
+    "@babel/preset-env": "7.11.5",
+    "@babel/preset-react": "7.10.4",
+    "@babel/preset-typescript": "7.10.4",
     "@types/enzyme": "^3.10.6",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/expect-puppeteer": "^4.4.3",
     "@types/jest": "^26.0.14",
     "@types/jest-environment-puppeteer": "^4.4.0",
@@ -40,6 +41,7 @@
     "@types/react-dom": "^16.9.8",
     "babel-core": "^6.26.3",
     "babel-runtime": "^6.26.0",
+    "copy-webpack-plugin": "^4.5.2",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.4",
     "file-loader": "^6.1.0",
@@ -47,15 +49,11 @@
     "jest-puppeteer": "^4.4.0",
     "puppeteer": "^5.3.1",
     "ts-jest": "^26.4.0",
+    "ts-loader": "^8.0.4",
     "typescript": "^4.0.3",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0",
-    "@babel/cli": "7.11.6",
-    "@babel/core": "7.11.6",
-    "@babel/preset-env": "7.11.5",
-    "@babel/preset-react": "7.10.4",
-    "@babel/preset-typescript": "7.10.4"
+    "webpack-dev-server": "^3.11.0"
   },
   "prestart": "npm-link-shared ../node_modules/test-npm-module/node_modules . react",
   "files": [

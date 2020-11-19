@@ -3,7 +3,6 @@ import { shallow } from 'enzyme'
 import { Highlight } from '../Highlight'
 import { SelectionRectangle } from '../TextSelection'
 
-
 describe('Highlight', () => {
   it('should render a rectangle', () => {
     const highlight: SelectionRectangle = { top: 0, left: 0, width: 0, height: 0, pageNumber: 1 }

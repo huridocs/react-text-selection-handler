@@ -947,7 +947,7 @@
     "@babel/helper-plugin-utils" "^7.10.4"
     "@babel/plugin-transform-typescript" "^7.10.4"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.8.4":
+"@babel/runtime@^7.8.4":
   version "7.12.1"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.12.1.tgz#b4116a6b6711d010b2dad3b7b6e43bf1b9954740"
   integrity sha512-J5AIf3vPj3UwXaAzb5j1xM4WAQDX3EMgemF8rjCP3SoW09LfRKAXQKt6CoVYl230P6iWdRcBbnLDDdnqWxZSCA==
@@ -1367,11 +1367,6 @@
   resolved "https://registry.yarnpkg.com/@types/normalize-package-data/-/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
   integrity sha512-f5j5b/Gf71L+dbqxIpQ4Z2WlmI/mPJ0fOkGGmFgtb6sAu97EPczzbS3/tJKxmcYDj55OX6ssqwDAWOHIYDRDGA==
 
-"@types/pdfjs-dist@*":
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/@types/pdfjs-dist/-/pdfjs-dist-2.1.5.tgz#98d7c8796919828bbdcdf364ca6bf82105b9246e"
-  integrity sha512-/vs9nLI/BYNo1pobKR5oEucEEcMgd8Mx1nByPNR3QhTboBwdDreQ0fHYXrGRtK3cShDDrVdApL0KhMckMuKSHw==
-
 "@types/prettier@^2.0.0":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.1.5.tgz#b6ab3bba29e16b821d84e09ecfaded462b816b00"
@@ -1393,21 +1388,6 @@
   version "16.9.8"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.9.8.tgz#fe4c1e11dfc67155733dfa6aa65108b4971cb423"
   integrity sha512-ykkPQ+5nFknnlU6lDd947WbQ6TE3NNzbQAkInC2EKY1qeYdTKp7onFusmYZb+ityzx2YviqT6BXSu+LyWWJwcA==
-  dependencies:
-    "@types/react" "*"
-
-"@types/react-pdf@^4.0.6":
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/@types/react-pdf/-/react-pdf-4.0.6.tgz#cc96357d87ca72e21d8d4caec5956c62a3990abc"
-  integrity sha512-ZmtUA31L5AaF9PilB8cJ3PuGOHIiyWcHnCir7KOux1cDjfVH6VxiN/j7CcyX98U9hwlyN81bkqxeNWNuEc0a4w==
-  dependencies:
-    "@types/pdfjs-dist" "*"
-    "@types/react" "*"
-
-"@types/react-window@^1.8.2":
-  version "1.8.2"
-  resolved "https://registry.yarnpkg.com/@types/react-window/-/react-window-1.8.2.tgz#a5a6b2762ce73ffaab7911ee1397cf645f2459fe"
-  integrity sha512-gP1xam68Wc4ZTAee++zx6pTdDAH08rAkQrWm4B4F/y6hhmlT9Mgx2q8lTCXnrPHXsr15XjRN9+K2DLKcz44qEQ==
   dependencies:
     "@types/react" "*"
 
@@ -5581,11 +5561,6 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
-make-cancellable-promise@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/make-cancellable-promise/-/make-cancellable-promise-1.0.0.tgz#826214115b0827ca7a45ba204df7c31546243870"
-  integrity sha512-+YO6Grg2uy/z8Mv3uV90OP6yAUHIF43YGgEFbejmBrK9VWFsVO6DvzFMcopXr9wCNg3/QIltIKiSCROC7zFB2g==
-
 make-dir@^1.0.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-1.3.0.tgz#79c1033b80515bd6d24ec9933e860ca75ee27f0c"
@@ -5612,11 +5587,6 @@ make-error@1.x:
   version "1.3.6"
   resolved "https://registry.yarnpkg.com/make-error/-/make-error-1.3.6.tgz#2eb2e37ea9b67c4891f684a1394799af484cf7a2"
   integrity sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==
-
-make-event-props@^1.1.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/make-event-props/-/make-event-props-1.2.0.tgz#96b87d88919533b8f8934b58b4c3d5679459a0cf"
-  integrity sha512-BmWFkm/jZzVH9A0tEBdkjAARUz/eha+5IRyfOndeSMKRadkgR5DawoBHoRwLxkYmjJOI5bHkXKpaZocxj+dKgg==
 
 makeerror@1.0.x:
   version "1.0.11"
@@ -5651,11 +5621,6 @@ media-typer@0.3.0:
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g=
 
-"memoize-one@>=3.1.1 <6":
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.1.1.tgz#047b6e3199b508eaec03504de71229b8eb1d75c0"
-  integrity sha512-HKeeBpWvqiVJD57ZUAsJNm71eHTykffzcLZVYWiVfQeI1rJtuEaS7hQiEpWfVVk18donPwJEcFKIkCmPJNOhHA==
-
 memory-fs@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/memory-fs/-/memory-fs-0.4.1.tgz#3a9a20b8462523e447cfbc7e8bb80ed667bfc552"
@@ -5671,11 +5636,6 @@ memory-fs@^0.5.0:
   dependencies:
     errno "^0.1.3"
     readable-stream "^2.0.1"
-
-merge-class-names@^1.1.1:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/merge-class-names/-/merge-class-names-1.3.0.tgz#c4cdc1a981a81dd9afc27aa4287e912a337c5dee"
-  integrity sha512-k0Qaj36VBpKgdc8c188LEZvo6v/zzry/FUufwopWbMSp6/knfVFU/KIB55/hJjeIpg18IH2WskXJCRnM/1BrdQ==
 
 merge-deep@^3.0.2:
   version "3.0.2"
@@ -6421,11 +6381,6 @@ pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-pdfjs-dist@2.4.456:
-  version "2.4.456"
-  resolved "https://registry.yarnpkg.com/pdfjs-dist/-/pdfjs-dist-2.4.456.tgz#0eaad2906cda866bbb393e79a0e5b4e68bd75520"
-  integrity sha512-yckJEHq3F48hcp6wStEpbN9McOj328Ib09UrBlGAKxvN2k+qYPN5iq6TH6jD1C0pso7zTep+g/CKsYgdrQd5QA==
-
 pend@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/pend/-/pend-1.2.0.tgz#7a57eb550a6783f9115331fcf4663d5c8e007a50"
@@ -6748,23 +6703,19 @@ raw-body@2.4.0:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
+react-dom@^17.0.1:
+  version "17.0.1"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-17.0.1.tgz#1de2560474ec9f0e334285662ede52dbc5426fc6"
+  integrity sha512-6eV150oJZ9U2t9svnsspTMrWNyHc6chX0KzDeAOXftRa8bNeOKTTfCJ7KorIwenkHd2xqVTBTCZd79yk/lx/Ug==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    scheduler "^0.20.1"
+
 react-is@^16.12.0, react-is@^16.13.1, react-is@^16.8.1, react-is@^16.8.6:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
-
-react-pdf@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/react-pdf/-/react-pdf-5.0.0.tgz#baddeecd5c5ef92ae57aed1ee141203ad14d4b5d"
-  integrity sha512-VpqZjpZGEevmotLYl6acU6GYQeJ0dxn9+5sth5QjWLFhKu0xy3zSZgt3U3m97zW6UWzQ/scvw5drfPyun5l4eA==
-  dependencies:
-    "@babel/runtime" "^7.0.0"
-    make-cancellable-promise "^1.0.0"
-    make-event-props "^1.1.0"
-    merge-class-names "^1.1.1"
-    pdfjs-dist "2.4.456"
-    prop-types "^15.6.2"
-    worker-loader "^3.0.0"
 
 react-test-renderer@^16.0.0-0:
   version "16.14.0"
@@ -6776,13 +6727,13 @@ react-test-renderer@^16.0.0-0:
     react-is "^16.8.6"
     scheduler "^0.19.1"
 
-react-window@^1.8.5:
-  version "1.8.5"
-  resolved "https://registry.yarnpkg.com/react-window/-/react-window-1.8.5.tgz#a56b39307e79979721021f5d06a67742ecca52d1"
-  integrity sha512-HeTwlNa37AFa8MDZFZOKcNEkuF2YflA0hpGPiTT9vR7OawEt+GZbfM6wqkBahD3D3pUjIabQYzsnY/BSJbgq6Q==
+react@>=16.13.1:
+  version "17.0.1"
+  resolved "https://registry.yarnpkg.com/react/-/react-17.0.1.tgz#6e0600416bd57574e3f86d92edba3d9008726127"
+  integrity sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w==
   dependencies:
-    "@babel/runtime" "^7.0.0"
-    memoize-one ">=3.1.1 <6"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
 
 read-pkg-up@^7.0.1:
   version "7.0.1"
@@ -7152,6 +7103,14 @@ scheduler@^0.19.1:
   version "0.19.1"
   resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.19.1.tgz#4f3e2ed2c1a7d65681f4c854fa8c5a1ccb40f196"
   integrity sha512-n/zwRWRYSUj0/3g/otKDRPMh6qv2SYMWNq85IEa8iZyAv8od9zDYpGSnpBEjNgcMNq6Scbu5KfIPxNF72R/2EA==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+
+scheduler@^0.20.1:
+  version "0.20.1"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.20.1.tgz#da0b907e24026b01181ecbc75efdc7f27b5a000c"
+  integrity sha512-LKTe+2xNJBNxu/QhHvDR14wUXHRQbVY5ZOYpOGWRzhydZUqrLb2JBvLPY7cAqFmqrWuDED0Mjk7013SZiOz6Bw==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
@@ -8491,14 +8450,6 @@ worker-farm@^1.7.0:
   integrity sha512-rvw3QTZc8lAxyVrqcSGVm5yP/IJ2UcB3U0graE3LCFoZ0Yn2x4EoVSqJKdB/T5M+FLcRPjz4TDacRf3OCfNUzw==
   dependencies:
     errno "~0.1.7"
-
-worker-loader@^3.0.0:
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/worker-loader/-/worker-loader-3.0.5.tgz#6e13a583c4120ba419eece8e4f2e098b014311bf"
-  integrity sha512-cOh4UqTtvT8eHpyuuTK2C66Fg/G5Pb7g11bwtKm7uyD0vj2hCGY1APlSzVD75V9ciYZt44VPbFPiSFTSLxkQ+w==
-  dependencies:
-    loader-utils "^2.0.0"
-    schema-utils "^3.0.0"
 
 wrap-ansi@^5.1.0:
   version "5.1.0"
