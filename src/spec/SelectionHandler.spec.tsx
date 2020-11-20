@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { SelectionHandler } from '../SelectionHandler'
 import { shallow } from 'enzyme'
 import { TextSelection } from '../TextSelection'

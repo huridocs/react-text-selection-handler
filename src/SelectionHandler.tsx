@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { FunctionComponent, useRef } from 'react'
+import React, { FunctionComponent } from 'react'
 import { SelectionRectangle, TextSelection } from './TextSelection'
 
 
@@ -8,7 +7,7 @@ interface SelectionHandlerProps {
 }
 
 const SelectionHandler: FunctionComponent<SelectionHandlerProps> = ({ onTextSelection, children }) => {
-  const ref = useRef(null)
+  const ref = React.useRef(null)
   const getSelection = () => {
     if (!ref || !ref.current || !onTextSelection) {
       return
@@ -31,7 +30,7 @@ const SelectionHandler: FunctionComponent<SelectionHandlerProps> = ({ onTextSele
       const cleanedRectangles: SelectionRectangle[] = []
 
       rectangles.map((rectangle) => {
-        const innerRectangles = rectangles.filter((rectangleFilter) => rectangle.pageNumber === rectangleFilter.pageNumber
+        const innerRectangles = rectangles.filter((rectangleFilter) => rectangle.regionId === rectangleFilter.regionId
           && rectangle.top < rectangleFilter.top
           && rectangleFilter.top + rectangleFilter.height < rectangle.top + rectangle.height
           && rectangle.left < rectangleFilter.left
@@ -62,7 +61,7 @@ const SelectionHandler: FunctionComponent<SelectionHandlerProps> = ({ onTextSele
           left: selectionDomRect.x - regionDomRect.x,
           width: selectionDomRect.width,
           height: selectionDomRect.height,
-          pageNumber: parseInt(regionElement.getAttribute('data-region-selector-id'))
+          regionId: regionElement.getAttribute('data-region-selector-id')
         }
       }
     )

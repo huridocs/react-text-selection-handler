@@ -8,6 +8,6 @@ export interface SelectionRectangle {
   top: number,
   width: number,
   height: number,
-  pageNumber?: number,
+  regionId?: string,
 }
 
