@@ -5,7 +5,7 @@ import { SelectionRectangle } from '../TextSelection'
 
 describe('Highlight', () => {
   it('should render a rectangle', () => {
-    const highlight: SelectionRectangle = { top: 0, left: 0, width: 0, height: 0, pageNumber: 1 }
+    const highlight: SelectionRectangle = { top: 0, left: 0, width: 0, height: 0, regionId: "1" }
     const selectionHandlerWrapper = shallow(<Highlight highlight={{ selectionRectangles: [highlight] }} />)
     expect(selectionHandlerWrapper.find('div').at(0).prop('style')).toEqual({
       ...defaultStyle,

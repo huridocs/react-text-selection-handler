@@ -3,10 +3,11 @@ import { SelectionRectangle, TextSelection } from './TextSelection'
 
 
 interface SelectionHandlerProps {
-  onTextSelection?: (textSelection: TextSelection) => any
+  onTextSelection?: (textSelection: TextSelection) => any,
+  onTextDeselection?: () => any
 }
 
-const SelectionHandler: FunctionComponent<SelectionHandlerProps> = ({ onTextSelection, children }) => {
+const SelectionHandler: FunctionComponent<SelectionHandlerProps> = ({ onTextSelection, onTextDeselection, children }) => {
   const ref = React.useRef(null)
   const getSelection = () => {
     if (!ref || !ref.current || !onTextSelection) {
@@ -22,6 +23,7 @@ const SelectionHandler: FunctionComponent<SelectionHandlerProps> = ({ onTextSele
     }
 
     if (!selection || selection.type !== 'Range') {
+      if(onTextDeselection) onTextDeselection()
       return
     }
 

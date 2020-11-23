@@ -29,15 +29,17 @@ describe('SelectionHandler', () => {
     expect(callback).not.toHaveBeenCalled()
   })
 
-  it('should not call callback when empty selection', () => {
+  it('should call deselect callback when a text has been deselected', () => {
     mockGetSelection('Caret', '', [])
     mockSelectionRegionRectangles([{ x: 0, y: 0, height: 10, width: 10 }])
 
     const callback = jest.fn()
+    const deselectCallback = jest.fn()
 
-    const selectionHandlerWrapper = shallow(<SelectionHandler onTextSelection={callback} />)
+    const selectionHandlerWrapper = shallow(<SelectionHandler onTextSelection={callback} onTextDeselection={deselectCallback} />)
     selectionHandlerWrapper.simulate('mouseup')
     expect(callback).not.toHaveBeenCalled()
+    expect(deselectCallback).toHaveBeenCalled()
   })
 
   it('should return one selection rectangle', () => {

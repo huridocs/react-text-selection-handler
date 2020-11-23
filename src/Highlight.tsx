@@ -5,7 +5,7 @@ import { TextSelection } from './TextSelection'
 
 interface HighlightProps {
   highlight: TextSelection,
-  color?: string,
+  color?: string
 }
 
 const Highlight: FunctionComponent<HighlightProps> = ({ highlight, color }) => {
