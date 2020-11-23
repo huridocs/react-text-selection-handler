@@ -5,11 +5,15 @@ import { TextSelection } from './TextSelection'
 
 interface HighlightProps {
   highlight: TextSelection,
-  color?: string
+  color?: string,
+  regionId?: string
 }
 
-const Highlight: FunctionComponent<HighlightProps> = ({ highlight, color }) => {
-  return <> {highlight.selectionRectangles.map((selectionRectangle, index) => {
+const Highlight: FunctionComponent<HighlightProps> = ({ highlight, regionId, color }) => {
+  return <> {highlight.selectionRectangles
+    .filter((rectangle) => {
+      return rectangle.regionId && regionId ? rectangle.regionId === regionId : true
+    }).map((selectionRectangle, index) => {
     const style: CSSProperties = {
       top: selectionRectangle.top,
       left: selectionRectangle.left,
