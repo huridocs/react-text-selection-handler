@@ -4,11 +4,17 @@ import { Highlight } from '../Highlight'
 import { SelectionRectangle } from '../TextSelection'
 
 describe('Highlight', () => {
+  let highlight: SelectionRectangle;
+  let highlight2: SelectionRectangle;
+  let highlight3: SelectionRectangle;
+
+  beforeEach(() => {
+    highlight = { top: 0, left: 0, width: 0, height: 0, regionId: "1" }
+    highlight2 = { top: 0, left: 0, width: 0, height: 0, regionId: "1" }
+    highlight3 = { top: 1, left: 1, width: 1, height: 1, regionId: "2" }
+  })
   it('should render a rectangle', () => {
-    const highlight: SelectionRectangle = { top: 0, left: 0, width: 0, height: 0, regionId: "1" }
-    const highlight2: SelectionRectangle = { top: 0, left: 0, width: 0, height: 0, regionId: "1" }
-    const highligh3: SelectionRectangle = { top: 1, left: 1, width: 1, height: 1, regionId: "2" }
-    const selectionHandlerWrapper = shallow(<Highlight highlight={{ selectionRectangles: [highlight, highlight2, highligh3] }} regionId="1"/>)
+    const selectionHandlerWrapper = shallow(<Highlight highlight={{ selectionRectangles: [highlight, highlight2, highlight3] }} regionId="1"/>)
     expect(selectionHandlerWrapper.find('div').at(0).prop('style')).toEqual({
       ...defaultStyle,
       top: 0, left: 0, width: 0, height: 0,
@@ -17,6 +23,11 @@ describe('Highlight', () => {
     })
     expect(selectionHandlerWrapper.find('div').at(0).hasClass('highlight-rectangle')).toEqual(true);
     expect(selectionHandlerWrapper.find('div').length).toEqual(2);
+  })
+
+  it('should render all highlights of regionId is not provided', () => {
+    const selectionHandlerWrapper = shallow(<Highlight highlight={{ selectionRectangles: [highlight, highlight2, highlight3] }}/>)
+    expect(selectionHandlerWrapper.find('div').length).toEqual(3);
   })
 
   it('should render two rectangles', () => {
