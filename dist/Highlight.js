@@ -13,9 +13,12 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 const Highlight = ({
   highlight,
+  regionId,
   color
 }) => {
-  return /*#__PURE__*/React.createElement(React.Fragment, null, " ", highlight.selectionRectangles.map((selectionRectangle, index) => {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, " ", highlight.selectionRectangles.filter(rectangle => {
+    return rectangle.regionId && regionId ? rectangle.regionId === regionId : true;
+  }).map((selectionRectangle, index) => {
     const style = {
       top: selectionRectangle.top,
       left: selectionRectangle.left,

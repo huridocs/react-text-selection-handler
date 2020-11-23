@@ -19,10 +19,25 @@ describe('Highlight', () => {
       height: 0,
       regionId: "1"
     };
+    const highlight2 = {
+      top: 0,
+      left: 0,
+      width: 0,
+      height: 0,
+      regionId: "1"
+    };
+    const highligh3 = {
+      top: 1,
+      left: 1,
+      width: 1,
+      height: 1,
+      regionId: "2"
+    };
     const selectionHandlerWrapper = (0, _enzyme.shallow)( /*#__PURE__*/React.createElement(_Highlight.Highlight, {
       highlight: {
-        selectionRectangles: [highlight]
-      }
+        selectionRectangles: [highlight, highlight2, highligh3]
+      },
+      regionId: "1"
     }));
     expect(selectionHandlerWrapper.find('div').at(0).prop('style')).toEqual({ ...defaultStyle,
       top: 0,
@@ -33,6 +48,7 @@ describe('Highlight', () => {
       opacity: 0.5
     });
     expect(selectionHandlerWrapper.find('div').at(0).hasClass('highlight-rectangle')).toEqual(true);
+    expect(selectionHandlerWrapper.find('div').length).toEqual(2);
   });
   it('should render two rectangles', () => {
     const highlights1 = {
