@@ -17,7 +17,7 @@ describe('Highlight', () => {
       left: 0,
       width: 0,
       height: 0,
-      pageNumber: 1
+      regionId: "1"
     };
     const selectionHandlerWrapper = (0, _enzyme.shallow)( /*#__PURE__*/React.createElement(_Highlight.Highlight, {
       highlight: {

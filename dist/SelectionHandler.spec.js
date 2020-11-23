@@ -1,14 +1,12 @@
 "use strict";
 
-var React = _interopRequireWildcard(require("react"));
+var _react = _interopRequireDefault(require("react"));
 
 var _SelectionHandler = require("../SelectionHandler");
 
 var _enzyme = require("enzyme");
 
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 describe('SelectionHandler', () => {
   it('should allow children', () => {
@@ -19,7 +17,7 @@ describe('SelectionHandler', () => {
       height: 10,
       width: 10
     }]);
-    const selectionHandlerWrapper = (0, _enzyme.shallow)( /*#__PURE__*/React.createElement(_SelectionHandler.SelectionHandler, null, /*#__PURE__*/React.createElement("h1", null, "Title")));
+    const selectionHandlerWrapper = (0, _enzyme.shallow)( /*#__PURE__*/_react.default.createElement(_SelectionHandler.SelectionHandler, null, /*#__PURE__*/_react.default.createElement("h1", null, "Title")));
     expect(selectionHandlerWrapper.text()).toEqual('Title');
   });
   it('should not call callback when no mouse up', () => {
@@ -36,12 +34,12 @@ describe('SelectionHandler', () => {
       width: 10
     }]);
     const callback = jest.fn();
-    (0, _enzyme.shallow)( /*#__PURE__*/React.createElement(_SelectionHandler.SelectionHandler, {
+    (0, _enzyme.shallow)( /*#__PURE__*/_react.default.createElement(_SelectionHandler.SelectionHandler, {
       onTextSelection: callback
     }));
     expect(callback).not.toHaveBeenCalled();
   });
-  it('should not call callback when empty selection', () => {
+  it('should call deselect callback when a text has been deselected', () => {
     mockGetSelection('Caret', '', []);
     mockSelectionRegionRectangles([{
       x: 0,
@@ -50,11 +48,14 @@ describe('SelectionHandler', () => {
       width: 10
     }]);
     const callback = jest.fn();
-    const selectionHandlerWrapper = (0, _enzyme.shallow)( /*#__PURE__*/React.createElement(_SelectionHandler.SelectionHandler, {
-      onTextSelection: callback
+    const deselectCallback = jest.fn();
+    const selectionHandlerWrapper = (0, _enzyme.shallow)( /*#__PURE__*/_react.default.createElement(_SelectionHandler.SelectionHandler, {
+      onTextSelection: callback,
+      onTextDeselection: deselectCallback
     }));
     selectionHandlerWrapper.simulate('mouseup');
     expect(callback).not.toHaveBeenCalled();
+    expect(deselectCallback).toHaveBeenCalled();
   });
   it('should return one selection rectangle', () => {
     mockGetSelection('Range', 'a text', [{
@@ -70,7 +71,7 @@ describe('SelectionHandler', () => {
       width: 10
     }]);
     const callback = jest.fn();
-    const selectionHandlerWrapper = (0, _enzyme.shallow)( /*#__PURE__*/React.createElement(_SelectionHandler.SelectionHandler, {
+    const selectionHandlerWrapper = (0, _enzyme.shallow)( /*#__PURE__*/_react.default.createElement(_SelectionHandler.SelectionHandler, {
       onTextSelection: callback
     }));
     selectionHandlerWrapper.simulate('mouseup');
@@ -99,7 +100,7 @@ describe('SelectionHandler', () => {
       width: 10
     }], ['other region']);
     const callback = jest.fn();
-    const selectionHandlerWrapper = (0, _enzyme.shallow)( /*#__PURE__*/React.createElement(_SelectionHandler.SelectionHandler, {
+    const selectionHandlerWrapper = (0, _enzyme.shallow)( /*#__PURE__*/_react.default.createElement(_SelectionHandler.SelectionHandler, {
       onTextSelection: callback
     }));
     selectionHandlerWrapper.simulate('mouseup');
@@ -138,7 +139,7 @@ describe('SelectionHandler', () => {
       width: 10
     }], ['1', '2']);
     const callback = jest.fn();
-    const selectionHandlerWrapper = (0, _enzyme.shallow)( /*#__PURE__*/React.createElement(_SelectionHandler.SelectionHandler, {
+    const selectionHandlerWrapper = (0, _enzyme.shallow)( /*#__PURE__*/_react.default.createElement(_SelectionHandler.SelectionHandler, {
       onTextSelection: callback
     }));
     selectionHandlerWrapper.simulate('mouseup');
@@ -193,7 +194,7 @@ function mockSelectionRegionRectangles(domRectListMock, rectangleIds = ['1']) {
   const regionsDomRectList = domRectListMock.map(domRectListMock => {
     return domRectListMock;
   });
-  jest.spyOn(React, 'useRef').mockReturnValueOnce({
+  jest.spyOn(_react.default, 'useRef').mockReturnValueOnce({
     current: {
       querySelectorAll: () => {
         return regionsDomRectList.map((domRect, index) => {
