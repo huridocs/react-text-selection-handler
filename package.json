@@ -19,13 +19,14 @@
     "build": "yarn babel -D -d dist/ src/* --extensions \".ts,.tsx\""
   },
   "dependencies": {
-    "react-dom": "^17.0.1",
-    "react": ">=16.13.1"
   },
   "peerDependencies": {
-    "react": ">=16.13.1"
+    "react": ">=16.13.1",
+    "react-dom": "^17.0.1"
   },
   "devDependencies": {
+    "react-dom": "^17.0.1",
+    "react": ">=16.13.1",
     "@babel/cli": "7.11.6",
     "@babel/core": "7.11.6",
     "@babel/preset-env": "7.11.5",
