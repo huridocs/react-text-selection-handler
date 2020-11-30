@@ -98,5 +98,6 @@ const defaultStyle = {
   position: 'absolute',
   display: 'block',
   mixBlendMode: 'darken',
-  opacity: 0.5
+  opacity: 0.5,
+  zIndex: 1
 };

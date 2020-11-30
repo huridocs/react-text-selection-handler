@@ -25,7 +25,8 @@ const Highlight: FunctionComponent<HighlightProps> = ({ highlight, regionId, col
       display: 'block',
       mixBlendMode: 'darken',
       opacity: 0.5,
-      backgroundColor: color ? color : 'orange'
+      backgroundColor: color ? color : 'orange',
+      zIndex: 1
     }
     return (<div className={'highlight-rectangle'} key={index} style={style} />)
   })}

@@ -30,7 +30,8 @@ const Highlight = ({
       display: 'block',
       mixBlendMode: 'darken',
       opacity: 0.5,
-      backgroundColor: color ? color : 'orange'
+      backgroundColor: color ? color : 'orange',
+      zIndex: 1
     };
     return /*#__PURE__*/React.createElement("div", {
       className: 'highlight-rectangle',
