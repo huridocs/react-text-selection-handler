@@ -130,4 +130,3 @@ function mockSelectionRegionRectangles(domRectListMock, rectangleIds) {
         }
     });
 }
-//# sourceMappingURL=SelectionHandler.spec.js.map

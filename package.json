@@ -16,7 +16,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "start": "webpack-dev-server --config ./sample/webpack.config.js",
-    "build": "yarn babel -D -d dist/ src/* --extensions \".ts,.tsx\""
+    "build": "tsc"
   },
   "dependencies": {
   },

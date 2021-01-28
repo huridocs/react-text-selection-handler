@@ -61,4 +61,3 @@ var SelectionHandler = function (_a) {
     return (react_1.default.createElement("div", { ref: ref, onMouseUp: getSelection }, children));
 };
 exports.SelectionHandler = SelectionHandler;
-//# sourceMappingURL=SelectionHandler.js.map

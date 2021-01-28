@@ -33,4 +33,3 @@ describe('SelectionRegion', function () {
         expect(selectionHandlerWrapper.text()).toEqual('Title');
     });
 });
-//# sourceMappingURL=SelectionRegion.spec.js.map

@@ -47,4 +47,3 @@ var Highlight = function (_a) {
         }));
 };
 exports.Highlight = Highlight;
-//# sourceMappingURL=Highlight.js.map

@@ -69,4 +69,3 @@ var defaultStyle = {
     opacity: 0.5,
     zIndex: 1
 };
-//# sourceMappingURL=Highlight.spec.js.map

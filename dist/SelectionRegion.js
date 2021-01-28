@@ -26,4 +26,3 @@ var SelectionRegion = function (_a) {
     return React.createElement("div", { "data-region-selector-id": regionId }, children);
 };
 exports.SelectionRegion = SelectionRegion;
-//# sourceMappingURL=SelectionRegion.js.map
