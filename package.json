@@ -1,7 +1,7 @@
 {
   "name": "react-pdf-handler",
   "version": "1.0.0",
-  "main": "./src/index.ts",
+  "main": "./dist/index.js",
   "description": "React pdf handler allows to render a PDF and handle text selection and highlights.",
   "author": "HURIDOCS",
   "license": "Apache-2.0",
