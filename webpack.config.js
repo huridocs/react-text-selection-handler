@@ -7,7 +7,7 @@ module.exports = {
   context: __dirname,
   entry:
     {
-      index: 'index.ts'
+      index: './src/index.ts'
     },
   output: {
     path: path.join(__dirname, 'dist'),
