@@ -11,7 +11,7 @@ module.exports = {
     },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'react-pdf-handler.js',
+    filename: 'index.js',
     library: 'ReactPdfHandler',
     libraryTarget: 'umd',
     globalObject: 'this',
