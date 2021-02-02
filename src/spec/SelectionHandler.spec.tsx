@@ -60,7 +60,7 @@ describe('SelectionHandler', () => {
     })
   })
 
-  it('should select only span elements', () => {
+  it('should avoid selection of elements tags', () => {
     mockGetSelection('Range', 'a text', [{ y: 0, x: 0, width: 10, height: 10 }, {x:1, y:1, height: 10, width: 10}])
     mockSelectionRegionRectangles([{ x: 0, y: 0, height: 10, width: 10 }, {x:1, y:1, height: 10, width: 10}])
 
@@ -74,7 +74,7 @@ describe('SelectionHandler', () => {
 
     const callback = jest.fn()
 
-    const selectionHandlerWrapper = shallow(<SelectionHandler onTextSelection={callback} />)
+    const selectionHandlerWrapper = shallow(<SelectionHandler onTextSelection={callback} elementTagsToAvoid={['DIV']}/>)
     selectionHandlerWrapper.simulate('mouseup')
 
     expect(callback).toHaveBeenCalledWith({

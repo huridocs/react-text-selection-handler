@@ -4,12 +4,14 @@ import { SelectionRectangle, TextSelection } from './TextSelection'
 
 interface SelectionHandlerProps {
   onTextSelection?: (textSelection: TextSelection) => any,
-  onTextDeselection?: () => any
+  onTextDeselection?: () => any,
+  elementTagsToAvoid?: string[],
 }
 
 const SelectionHandler: FunctionComponent<SelectionHandlerProps> = ({
                                                                       onTextSelection,
                                                                       onTextDeselection,
+                                                                      elementTagsToAvoid,
                                                                       children
                                                                     }) => {
   const ref = React.useRef(null)
@@ -33,13 +35,17 @@ const SelectionHandler: FunctionComponent<SelectionHandlerProps> = ({
 
     const selectionDomRectList = selection.getRangeAt(0).getClientRects()
 
-    const selectionSpanKeys = Object.keys(selectionDomRectList).filter(x  => {
-      const selectionDomRect = selectionDomRectList[parseInt(x)]
-      const element = document.elementFromPoint(selectionDomRect.x, selectionDomRect.y);
-      return element.tagName === "SPAN";
-    })
+    let selectionDomRectListKeys = Object.keys(selectionDomRectList)
 
-    const selectionRectangles = selectionSpanKeys.map((key: string) => {
+    if (elementTagsToAvoid) {
+      selectionDomRectListKeys = selectionDomRectListKeys.filter(x  => {
+        const selectionDomRect = selectionDomRectList[parseInt(x)]
+        const element = document.elementFromPoint(selectionDomRect.x, selectionDomRect.y);
+        return elementTagsToAvoid.indexOf(element.tagName) === -1;
+      })
+    }
+
+    const selectionRectangles = selectionDomRectListKeys.map((key: string) => {
         const selectionDomRect = selectionDomRectList[parseInt(key)]
         const regionElement = regionElements.find((x: HTMLDivElement) => {
           const regionDomRect = x.getBoundingClientRect()

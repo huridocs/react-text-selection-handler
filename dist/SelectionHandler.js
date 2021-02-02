@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SelectionHandler = void 0;
 var react_1 = __importDefault(require("react"));
 var SelectionHandler = function (_a) {
-    var onTextSelection = _a.onTextSelection, onTextDeselection = _a.onTextDeselection, children = _a.children;
+    var onTextSelection = _a.onTextSelection, onTextDeselection = _a.onTextDeselection, elementTagsToAvoid = _a.elementTagsToAvoid, children = _a.children;
     var ref = react_1.default.useRef(null);
     var getSelection = function () {
         if (!ref || !ref.current || !onTextSelection) {
@@ -25,12 +25,15 @@ var SelectionHandler = function (_a) {
             return;
         }
         var selectionDomRectList = selection.getRangeAt(0).getClientRects();
-        var selectionSpanKeys = Object.keys(selectionDomRectList).filter(function (x) {
-            var selectionDomRect = selectionDomRectList[parseInt(x)];
-            var element = document.elementFromPoint(selectionDomRect.x, selectionDomRect.y);
-            return element.tagName === "SPAN";
-        });
-        var selectionRectangles = selectionSpanKeys.map(function (key) {
+        var selectionDomRectListKeys = Object.keys(selectionDomRectList);
+        if (elementTagsToAvoid) {
+            selectionDomRectListKeys = selectionDomRectListKeys.filter(function (x) {
+                var selectionDomRect = selectionDomRectList[parseInt(x)];
+                var element = document.elementFromPoint(selectionDomRect.x, selectionDomRect.y);
+                return elementTagsToAvoid.indexOf(element.tagName) === -1;
+            });
+        }
+        var selectionRectangles = selectionDomRectListKeys.map(function (key) {
             var selectionDomRect = selectionDomRectList[parseInt(key)];
             var regionElement = regionElements.find(function (x) {
                 var regionDomRect = x.getBoundingClientRect();

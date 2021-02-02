@@ -45,7 +45,7 @@ describe('SelectionHandler', function () {
             selectionRectangles: [{ top: 0, left: 0, width: 0, height: 0, regionId: '1' }]
         });
     });
-    it('should select only span elements', function () {
+    it('should avoid selection of elements tags', function () {
         mockGetSelection('Range', 'a text', [{ y: 0, x: 0, width: 10, height: 10 }, { x: 1, y: 1, height: 10, width: 10 }]);
         mockSelectionRegionRectangles([{ x: 0, y: 0, height: 10, width: 10 }, { x: 1, y: 1, height: 10, width: 10 }]);
         document.elementFromPoint = function (x, y) {
@@ -55,7 +55,7 @@ describe('SelectionHandler', function () {
             return document.createElement('span');
         };
         var callback = jest.fn();
-        var selectionHandlerWrapper = enzyme_1.shallow(react_1.default.createElement(SelectionHandler_1.SelectionHandler, { onTextSelection: callback }));
+        var selectionHandlerWrapper = enzyme_1.shallow(react_1.default.createElement(SelectionHandler_1.SelectionHandler, { onTextSelection: callback, elementTagsToAvoid: ['DIV'] }));
         selectionHandlerWrapper.simulate('mouseup');
         expect(callback).toHaveBeenCalledWith({
             text: 'a text',
