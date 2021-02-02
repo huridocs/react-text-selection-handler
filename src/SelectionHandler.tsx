@@ -31,27 +31,6 @@ const SelectionHandler: FunctionComponent<SelectionHandlerProps> = ({
       return
     }
 
-    const cleanRectanglesSelection = (rectangles: SelectionRectangle[]) => {
-
-      const cleanedRectangles: SelectionRectangle[] = []
-
-      rectangles.map((rectangle) => {
-        const innerRectangles = rectangles.filter((rectangleFilter) => rectangle.regionId === rectangleFilter.regionId
-          && rectangle.top < rectangleFilter.top
-          && rectangleFilter.top + rectangleFilter.height < rectangle.top + rectangle.height
-          && rectangle.left < rectangleFilter.left
-          && rectangleFilter.left + rectangleFilter.width < rectangle.left + rectangle.width
-        )
-
-        if (innerRectangles.length === 0) {
-          cleanedRectangles.push(rectangle)
-        }
-
-      })
-
-      return cleanedRectangles
-    }
-
     const selectionDomRectList = selection.getRangeAt(0).getClientRects()
 
     const selectionSpanKeys = Object.keys(selectionDomRectList).filter(x  => {
@@ -79,7 +58,7 @@ const SelectionHandler: FunctionComponent<SelectionHandlerProps> = ({
       }
     )
 
-    onTextSelection({ text: selection.toString(), selectionRectangles: cleanRectanglesSelection(selectionRectangles) })
+    onTextSelection({ text: selection.toString(), selectionRectangles: selectionRectangles })
 
   }
 

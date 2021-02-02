@@ -24,20 +24,6 @@ var SelectionHandler = function (_a) {
                 onTextDeselection();
             return;
         }
-        var cleanRectanglesSelection = function (rectangles) {
-            var cleanedRectangles = [];
-            rectangles.map(function (rectangle) {
-                var innerRectangles = rectangles.filter(function (rectangleFilter) { return rectangle.regionId === rectangleFilter.regionId
-                    && rectangle.top < rectangleFilter.top
-                    && rectangleFilter.top + rectangleFilter.height < rectangle.top + rectangle.height
-                    && rectangle.left < rectangleFilter.left
-                    && rectangleFilter.left + rectangleFilter.width < rectangle.left + rectangle.width; });
-                if (innerRectangles.length === 0) {
-                    cleanedRectangles.push(rectangle);
-                }
-            });
-            return cleanedRectangles;
-        };
         var selectionDomRectList = selection.getRangeAt(0).getClientRects();
         var selectionSpanKeys = Object.keys(selectionDomRectList).filter(function (x) {
             var selectionDomRect = selectionDomRectList[parseInt(x)];
@@ -61,7 +47,7 @@ var SelectionHandler = function (_a) {
                 regionId: regionElement.getAttribute('data-region-selector-id')
             };
         });
-        onTextSelection({ text: selection.toString(), selectionRectangles: cleanRectanglesSelection(selectionRectangles) });
+        onTextSelection({ text: selection.toString(), selectionRectangles: selectionRectangles });
     };
     return (react_1.default.createElement("div", { ref: ref, onMouseUp: getSelection }, children));
 };
