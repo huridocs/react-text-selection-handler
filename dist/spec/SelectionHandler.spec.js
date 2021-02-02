@@ -7,6 +7,9 @@ var react_1 = __importDefault(require("react"));
 var SelectionHandler_1 = require("../SelectionHandler");
 var enzyme_1 = require("enzyme");
 describe('SelectionHandler', function () {
+    beforeEach(function () {
+        document.elementFromPoint = function () { return document.createElement('span'); };
+    });
     it('should allow children', function () {
         mockGetSelection('None', '', []);
         mockSelectionRegionRectangles([{ x: 0, y: 0, height: 10, width: 10 }]);
@@ -40,6 +43,23 @@ describe('SelectionHandler', function () {
         expect(callback).toHaveBeenCalledWith({
             text: 'a text',
             selectionRectangles: [{ top: 0, left: 0, width: 0, height: 0, regionId: '1' }]
+        });
+    });
+    it('should select only span elements', function () {
+        mockGetSelection('Range', 'a text', [{ y: 0, x: 0, width: 10, height: 10 }, { x: 1, y: 1, height: 10, width: 10 }]);
+        mockSelectionRegionRectangles([{ x: 0, y: 0, height: 10, width: 10 }, { x: 1, y: 1, height: 10, width: 10 }]);
+        document.elementFromPoint = function (x, y) {
+            if (x === 0 && y === 0) {
+                return document.createElement('div');
+            }
+            return document.createElement('span');
+        };
+        var callback = jest.fn();
+        var selectionHandlerWrapper = enzyme_1.shallow(react_1.default.createElement(SelectionHandler_1.SelectionHandler, { onTextSelection: callback }));
+        selectionHandlerWrapper.simulate('mouseup');
+        expect(callback).toHaveBeenCalledWith({
+            text: 'a text',
+            selectionRectangles: [{ top: 1, left: 1, width: 10, height: 10, regionId: '1' }]
         });
     });
     it('should return absolute position relative to SelectionRegion', function () {
@@ -129,5 +149,13 @@ function mockSelectionRegionRectangles(domRectListMock, rectangleIds) {
             }
         }
     });
+}
+function mockElementFromPoint(divCoordinateX, divCoordinateY) {
+    document.elementFromPoint = function (x, y) {
+        if (x === divCoordinateX && y === divCoordinateY) {
+            return document.createElement('div');
+        }
+        return document.createElement('span');
+    };
 }
 //# sourceMappingURL=SelectionHandler.spec.js.map

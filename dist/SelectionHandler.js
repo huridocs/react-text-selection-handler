@@ -39,7 +39,12 @@ var SelectionHandler = function (_a) {
             return cleanedRectangles;
         };
         var selectionDomRectList = selection.getRangeAt(0).getClientRects();
-        var selectionRectangles = Object.keys(selectionDomRectList).map(function (key) {
+        var selectionSpanKeys = Object.keys(selectionDomRectList).filter(function (x) {
+            var selectionDomRect = selectionDomRectList[parseInt(x)];
+            var element = document.elementFromPoint(selectionDomRect.x, selectionDomRect.y);
+            return element.tagName === "SPAN";
+        });
+        var selectionRectangles = selectionSpanKeys.map(function (key) {
             var selectionDomRect = selectionDomRectList[parseInt(key)];
             var regionElement = regionElements.find(function (x) {
                 var regionDomRect = x.getBoundingClientRect();

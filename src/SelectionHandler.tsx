@@ -7,7 +7,11 @@ interface SelectionHandlerProps {
   onTextDeselection?: () => any
 }
 
-const SelectionHandler: FunctionComponent<SelectionHandlerProps> = ({ onTextSelection, onTextDeselection, children }) => {
+const SelectionHandler: FunctionComponent<SelectionHandlerProps> = ({
+                                                                      onTextSelection,
+                                                                      onTextDeselection,
+                                                                      children
+                                                                    }) => {
   const ref = React.useRef(null)
   const getSelection = () => {
     if (!ref || !ref.current || !onTextSelection) {
@@ -17,13 +21,13 @@ const SelectionHandler: FunctionComponent<SelectionHandlerProps> = ({ onTextSele
     // @ts-ignore
     const regionsNodeList = ref.current.querySelectorAll('div[data-region-selector-id]')
     const regionElements = Array.prototype.slice.call(regionsNodeList)
-    let selection = null;
+    let selection = null
     if (window) {
       selection = window.getSelection()
     }
 
     if (!selection || selection.type !== 'Range') {
-      if(onTextDeselection) onTextDeselection()
+      if (onTextDeselection) onTextDeselection()
       return
     }
 
@@ -49,7 +53,14 @@ const SelectionHandler: FunctionComponent<SelectionHandlerProps> = ({ onTextSele
     }
 
     const selectionDomRectList = selection.getRangeAt(0).getClientRects()
-    const selectionRectangles = Object.keys(selectionDomRectList).map((key: string) => {
+
+    const selectionSpanKeys = Object.keys(selectionDomRectList).filter(x  => {
+      const selectionDomRect = selectionDomRectList[parseInt(x)]
+      const element = document.elementFromPoint(selectionDomRect.x, selectionDomRect.y);
+      return element.tagName === "SPAN";
+    })
+
+    const selectionRectangles = selectionSpanKeys.map((key: string) => {
         const selectionDomRect = selectionDomRectList[parseInt(key)]
         const regionElement = regionElements.find((x: HTMLDivElement) => {
           const regionDomRect = x.getBoundingClientRect()

@@ -1,7 +1,6 @@
 import React from 'react'
 import { SelectionHandler } from '../SelectionHandler'
 import { shallow } from 'enzyme'
-import { TextSelection } from '../TextSelection'
 
 interface DomRectListMock {
   y: number,
@@ -11,6 +10,10 @@ interface DomRectListMock {
 }
 
 describe('SelectionHandler', () => {
+  beforeEach(() => {
+    document.elementFromPoint = () => document.createElement('span')
+  })
+
   it('should allow children', () => {
     mockGetSelection('None', '', [])
     mockSelectionRegionRectangles([{ x: 0, y: 0, height: 10, width: 10 }])
@@ -54,6 +57,29 @@ describe('SelectionHandler', () => {
     expect(callback).toHaveBeenCalledWith({
       text: 'a text',
       selectionRectangles: [{ top: 0, left: 0, width: 0, height: 0, regionId: '1' }]
+    })
+  })
+
+  it('should select only span elements', () => {
+    mockGetSelection('Range', 'a text', [{ y: 0, x: 0, width: 10, height: 10 }, {x:1, y:1, height: 10, width: 10}])
+    mockSelectionRegionRectangles([{ x: 0, y: 0, height: 10, width: 10 }, {x:1, y:1, height: 10, width: 10}])
+
+    document.elementFromPoint = (x, y) => {
+      if (x === 0 && y === 0){
+        return document.createElement('div')
+      }
+
+      return document.createElement('span')
+    }
+
+    const callback = jest.fn()
+
+    const selectionHandlerWrapper = shallow(<SelectionHandler onTextSelection={callback} />)
+    selectionHandlerWrapper.simulate('mouseup')
+
+    expect(callback).toHaveBeenCalledWith({
+      text: 'a text',
+      selectionRectangles: [{ top: 1, left: 1, width: 10, height: 10, regionId: '1' }]
     })
   })
 
@@ -155,4 +181,14 @@ function mockSelectionRegionRectangles(domRectListMock: DomRectListMock[], recta
       }
     }
   })
+}
+
+function mockElementFromPoint(divCoordinateX: number, divCoordinateY: number) {
+  document.elementFromPoint = (x, y) => {
+    if (x === divCoordinateX && y === divCoordinateY){
+      return document.createElement('div')
+    }
+
+    return document.createElement('span')
+  }
 }
