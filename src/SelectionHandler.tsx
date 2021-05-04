@@ -1,75 +1,48 @@
-import React, { FunctionComponent } from 'react'
-import { SelectionRectangle, TextSelection } from './TextSelection'
-
+import React, { FunctionComponent } from 'react';
+import { TextSelection } from './TextSelection';
+import { textRectsOnly, coversArea, relativeRectangleToRegion } from './utils';
 
 interface SelectionHandlerProps {
-  onTextSelection?: (textSelection: TextSelection) => any,
-  onTextDeselection?: () => any,
-  elementTagsToAvoid?: string[],
+  onTextSelection: (textSelection: TextSelection) => any;
+  onTextDeselection?: () => any;
 }
 
 const SelectionHandler: FunctionComponent<SelectionHandlerProps> = ({
-                                                                      onTextSelection,
-                                                                      onTextDeselection,
-                                                                      elementTagsToAvoid,
-                                                                      children
-                                                                    }) => {
-  const ref = React.useRef(null)
+  onTextSelection,
+  onTextDeselection,
+  children,
+}) => {
+  const ref = React.useRef(null);
+
   const getSelection = () => {
-    if (!ref || !ref.current || !onTextSelection) {
-      return
+    if (
+      !window
+        .getSelection()
+        .toString()
+        .trim()
+    ) {
+      if (onTextDeselection) onTextDeselection();
+      return;
     }
 
-    // @ts-ignore
-    const regionsNodeList = ref.current.querySelectorAll('div[data-region-selector-id]')
-    const regionElements = Array.prototype.slice.call(regionsNodeList)
-    let selection = null
-    if (window) {
-      selection = window.getSelection()
-    }
+    const regionElements = Array.from(ref.current.querySelectorAll('div[data-region-selector-id]'));
 
-    if (!selection || selection.type !== 'Range') {
-      if (onTextDeselection) onTextDeselection()
-      return
-    }
+    const selection = window.getSelection();
+    const range = selection.getRangeAt(0);
 
-    const selectionDomRectList = selection.getRangeAt(0).getClientRects()
+    const selectionRectangles = textRectsOnly(range).map(rectangle => {
+      const region = regionElements.find(coversArea(rectangle));
+      return relativeRectangleToRegion(rectangle, region);
+    });
 
-    let selectionDomRectListKeys = Object.keys(selectionDomRectList)
+    onTextSelection({ text: selection.toString(), selectionRectangles });
+  };
 
-    if (elementTagsToAvoid) {
-      selectionDomRectListKeys = selectionDomRectListKeys.filter(x  => {
-        const selectionDomRect = selectionDomRectList[parseInt(x)]
-        const element = document.elementFromPoint(selectionDomRect.x, selectionDomRect.y);
-        return elementTagsToAvoid.indexOf(element.tagName) === -1;
-      })
-    }
+  return (
+    <div role="none" ref={ref} onMouseUp={getSelection}>
+      {children}
+    </div>
+  );
+};
 
-    const selectionRectangles = selectionDomRectListKeys.map((key: string) => {
-        const selectionDomRect = selectionDomRectList[parseInt(key)]
-        const regionElement = regionElements.find((x: HTMLDivElement) => {
-          const regionDomRect = x.getBoundingClientRect()
-          const horizontalMatch = regionDomRect.x <= selectionDomRect.x && selectionDomRect.x <= regionDomRect.x + regionDomRect.width
-          const verticalMatch = regionDomRect.y <= selectionDomRect.y && selectionDomRect.y <= regionDomRect.y + regionDomRect.height
-          return horizontalMatch && verticalMatch
-        })
-        const regionDomRect = regionElement.getBoundingClientRect()
-        return {
-          top: selectionDomRect.y - regionDomRect.y,
-          left: selectionDomRect.x - regionDomRect.x,
-          width: selectionDomRect.width,
-          height: selectionDomRect.height,
-          regionId: regionElement.getAttribute('data-region-selector-id')
-        }
-      }
-    )
-
-    onTextSelection({ text: selection.toString(), selectionRectangles: selectionRectangles })
-
-  }
-
-  return (<div ref={ref} onMouseUp={getSelection}>{children}</div>)
-}
-
-
-export { SelectionHandler }
+export { SelectionHandler };

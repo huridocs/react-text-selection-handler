@@ -1,12 +1,12 @@
-import * as React from 'react'
-import { FunctionComponent } from 'react'
+import React, { FunctionComponent } from 'react';
 
 interface SelectionRegionProps {
-  regionId?: string
+  regionId?: string;
 }
 
-const SelectionRegion: FunctionComponent<SelectionRegionProps> = ({ regionId = 'selectionRegion', children }) => {
-  return <div data-region-selector-id={regionId}>{children}</div>
-}
+const SelectionRegion: FunctionComponent<SelectionRegionProps> = ({
+  regionId = 'selectionRegion',
+  children,
+}) => <div data-region-selector-id={regionId}>{children}</div>;
 
-export { SelectionRegion }
+export { SelectionRegion };
