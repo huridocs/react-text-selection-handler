@@ -1,0 +1,70 @@
+{
+  "extends": ["airbnb", "prettier"],
+  "env": {
+    "browser": true,
+    "jest": true,
+    "es6": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".ts", ".tsx"]
+      }
+    }
+  },
+  "plugins": ["react", "jest", "@typescript-eslint", "prettier"],
+  "rules": {
+    "prettier/prettier": ["error", { "requirePragma": false }],
+    "react/prop-types": "off",
+    "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
+    "import/prefer-default-export": "off",
+    "import/extensions": "off",
+    "import/no-default-export": "error",
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+
+    "quotes": "off",
+    "@typescript-eslint/quotes": [
+      "error",
+      "single",
+      {
+        "avoidEscape": true
+      }
+    ],
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"],
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
+    "no-unused-vars": "off",
+
+    //https://github.com/typescript-eslint/typescript-eslint/issues/662
+    "no-undef": "off",
+
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "vars": "all",
+        "argsIgnorePattern": "^_",
+        "args": "all",
+        "caughtErrors": "none",
+        "ignoreRestSiblings": true
+      }
+    ],
+    "@typescript-eslint/no-explicit-any": [
+      "off",
+      {
+        "fixToUnknown": false,
+        "ignoreRestArgs": false
+      }
+    ],
+    "@typescript-eslint/explicit-function-return-type": [
+      "off",
+      {
+        "allowExpressions": true
+      }
+    ]
+  },
+}

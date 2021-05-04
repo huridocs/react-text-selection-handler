@@ -23,28 +23,27 @@ exports.Highlight = void 0;
 var React = __importStar(require("react"));
 var Highlight = function (_a) {
     var highlight = _a.highlight, regionId = _a.regionId, color = _a.color;
-    return React.createElement(React.Fragment, null,
-        " ",
-        highlight.selectionRectangles
-            .filter(function (rectangle) {
-            return rectangle.regionId && regionId ? rectangle.regionId === regionId : true;
-        }).map(function (selectionRectangle, index) {
-            var style = {
-                top: selectionRectangle.top,
-                left: selectionRectangle.left,
-                width: selectionRectangle.width,
-                height: selectionRectangle.height,
-                padding: 0,
-                margin: 0,
-                position: 'absolute',
-                display: 'block',
-                mixBlendMode: 'darken',
-                opacity: 0.5,
-                backgroundColor: color ? color : 'orange',
-                zIndex: 1
-            };
-            return (React.createElement("div", { className: 'highlight-rectangle', key: index, style: style }));
-        }));
+    return (React.createElement(React.Fragment, null, highlight.selectionRectangles
+        .filter(function (rectangle) {
+        return rectangle.regionId && regionId ? rectangle.regionId === regionId : true;
+    })
+        .map(function (selectionRectangle) {
+        var style = {
+            top: selectionRectangle.top,
+            left: selectionRectangle.left,
+            width: selectionRectangle.width,
+            height: selectionRectangle.height,
+            padding: 0,
+            margin: 0,
+            position: 'absolute',
+            display: 'block',
+            mixBlendMode: 'darken',
+            opacity: 0.5,
+            backgroundColor: color || 'orange',
+            zIndex: 1,
+        };
+        return React.createElement("div", { className: "highlight-rectangle", style: style });
+    })));
 };
 exports.Highlight = Highlight;
 //# sourceMappingURL=Highlight.js.map
