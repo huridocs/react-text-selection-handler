@@ -13,49 +13,52 @@ const AreaSelection: FunctionComponent<AreaSelectionProps> = ({
                                                               }) => {
   const ref = React.useRef(null)
   const [textSelection, setTextSelection] = useState<TextSelection>()
-
-  let areaLeft: number
-  let areaTop: number
-  let areaRight: number
-  let areaBottom: number
+  const [left, setLeft] = useState<number>()
+  const [right, setRight] = useState<number>()
+  const [top, setTop] = useState<number>()
+  const [bottom, setBottom] = useState<number>()
 
   const resetArea = () => {
     setTextSelection(null)
-    areaLeft = null
-    areaTop = null
-    areaRight = null
-    areaBottom = null
+    setLeft(null)
+    setRight(null)
+    setTop(null)
+    setBottom(null)
   }
 
   const updateArea = (event) => {
-    areaLeft = areaLeft ? areaLeft : event.pageX
-    areaTop = areaTop ? areaTop : event.pageY
-    areaRight = event.pageX
-    areaBottom = event.pageY
+    event.stopPropagation();
+    setRight(event.clientX);
+    setBottom(event.clientY);
   }
 
   const getRectangle = () => {
-    const left = Math.min(areaLeft, right ? right : 0)
-    const top = Math.min(areaTop, bottom ? bottom : 0)
-    const right = Math.max(left, areaRight)
-    const bottom = Math.max(top, areaBottom)
+    const rectangleLeft = Math.min(left, right)
+    const rectangleTop = Math.min(top, bottom)
+    const rectangleRight = Math.max(left, right)
+    const rectangleBottom = Math.max(top, bottom)
 
-    return { x: left, y: top, width: right - left, height: bottom - top }
+    return { x: rectangleLeft,
+      y: rectangleTop,
+      width: rectangleRight - rectangleLeft,
+      height: rectangleBottom - rectangleTop }
   }
 
   const intersectionRectangleToRegion = (rectangle, region) => {
-    const regionDomRect = region.getBoundingClientRect()
+    const regionDomRect = region.getBoundingClientRect();
 
-    const left = Math.max(rectangle.x, regionDomRect.x)
-    const top = Math.max(rectangle.y, regionDomRect.y)
-    const right = Math.min(rectangle.y, regionDomRect.y)
-    const bottom = Math.min(rectangle.y, regionDomRect.y)
+    const intersectionLeft = Math.max(rectangle.x, regionDomRect.x);
+    const intersectionTop = Math.max(rectangle.y, regionDomRect.y);
+    const intersectionRight = Math.min(rectangle.x + rectangle.width, regionDomRect.x+ regionDomRect.width);
+    const intersectionBottom = Math.min(rectangle.y + rectangle.height, regionDomRect.y + regionDomRect.height);
+
+    console.log(rectangle.x + rectangle.width, intersectionRight);
 
     return {
-      top: top,
-      left: left,
-      width: right - left,
-      height: bottom - top,
+      top: intersectionTop,
+      left: intersectionLeft,
+      width: intersectionRight - intersectionLeft,
+      height: intersectionBottom - intersectionTop,
       regionId: region.getAttribute('data-region-selector-id')
     }
   }
@@ -111,6 +114,7 @@ const AreaSelection: FunctionComponent<AreaSelectionProps> = ({
     {
       return  { text: '', selectionRectangles }
     }
+
     const texts = regionElementsSelected
       .map(regionElements => {
         return getSelectedTextFromRegion(rectangle, regionElements)
@@ -119,7 +123,20 @@ const AreaSelection: FunctionComponent<AreaSelectionProps> = ({
     return { text: texts.join(' '), selectionRectangles }
   }
 
-  const updateSelectionArea = (event) => {
+  const handleStartSelectionArea = (event) => {
+    event.stopPropagation();
+    setLeft(event.clientX);
+    setTop(event.clientY);
+    setRight(event.clientX);
+    setBottom(event.clientY);
+    setTextSelection(getTextSelection())
+  }
+
+  const handleUpdateArea = (event) => {
+    event.stopPropagation();
+    if (!textSelection){
+      return;
+    }
     updateArea(event)
     setTextSelection(getTextSelection())
   }
@@ -130,18 +147,23 @@ const AreaSelection: FunctionComponent<AreaSelectionProps> = ({
     resetArea()
   }
 
+  const styles = {
+    userSelect: 'none'
+  }
+
   return (
     <>
       <div role='none'
            ref={ref}
-           onMouseDown={updateSelectionArea}
-           onMouseMove={updateSelectionArea}
+           onMouseDown={handleStartSelectionArea}
+           onMouseMove={handleUpdateArea}
            onMouseUp={handleTextSelection}
-           onMouseLeave={resetArea}>
+           onMouseLeave={resetArea}
+      style={styles}>
         {children}
       < /div>
       {textSelection &&
-      <Highlight highlight={textSelection} color={'blue'} />}
+      <Highlight highlight={textSelection} />}
     </>
   )
 }

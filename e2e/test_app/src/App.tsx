@@ -5,6 +5,7 @@ import { BatmanLogo } from './BatmanLogo'
 import { TextSelected } from './TextSelected'
 
 import { Highlight, SelectionHandler, SelectionRegion } from '../../../src/'
+import { AreaSelection } from '../../../src/AreaSelection'
 
 export function App() {
   const [selection, setSelection] = useState({
@@ -15,7 +16,7 @@ export function App() {
     <>
       <TextSelected>{selection.text}</TextSelected>
       <div style={{ position: 'absolute' }}>
-        <SelectionHandler
+        <AreaSelection
           onTextSelection={selection => {
             setSelection(selection)
           }}
@@ -49,7 +50,7 @@ export function App() {
               <LoremIpsum />
             </SelectionRegion>
           </Page>
-        </SelectionHandler>
+        </AreaSelection>
       </div>
     </>
   )

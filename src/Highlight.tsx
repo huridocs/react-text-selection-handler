@@ -14,7 +14,7 @@ const Highlight: FunctionComponent<HighlightProps> = ({ highlight, regionId, col
       .filter(rectangle =>
         rectangle.regionId && regionId ? rectangle.regionId === regionId : true
       )
-      .map(selectionRectangle => {
+      .map((selectionRectangle, index) => {
         const style: CSSProperties = {
           top: selectionRectangle.top,
           left: selectionRectangle.left,
@@ -29,7 +29,7 @@ const Highlight: FunctionComponent<HighlightProps> = ({ highlight, regionId, col
           backgroundColor: color || 'orange',
           zIndex: 1,
         };
-        return <div className="highlight-rectangle" style={style} />;
+        return <div className="highlight-rectangle" style={style} key={index} />;
       })}
   </>
 );
