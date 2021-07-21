@@ -1,85 +1,143 @@
-import { coversArea, relativeRectangleToRegion, textRectsOnly } from './utils'
+import { coversArea } from './utils'
 import { Highlight } from './Highlight'
 import React, { FunctionComponent, useState } from 'react'
 import { TextSelection } from './TextSelection'
 
 interface AreaSelectionProps {
   onTextSelection: (textSelection: TextSelection) => any;
-  onTextDeselection?: () => any;
 }
 
 const AreaSelection: FunctionComponent<AreaSelectionProps> = ({
                                                                 onTextSelection,
-                                                                onTextDeselection,
                                                                 children
                                                               }) => {
   const ref = React.useRef(null)
   const [textSelection, setTextSelection] = useState<TextSelection>()
 
-  let left: number;
-  let top: number;
-  let right: number;
-  let bottom: number;
+  let areaLeft: number
+  let areaTop: number
+  let areaRight: number
+  let areaBottom: number
 
   const resetArea = () => {
-    left = null;
-    top = null;
-    right = null;
-    bottom = null;
+    setTextSelection(null)
+    areaLeft = null
+    areaTop = null
+    areaRight = null
+    areaBottom = null
   }
 
   const updateArea = (event) => {
-    left = left? left: event.pageX;
-    top = top? top: event.pageY;
-    right = event.pageX
-    bottom = event.pageY
+    areaLeft = areaLeft ? areaLeft : event.pageX
+    areaTop = areaTop ? areaTop : event.pageY
+    areaRight = event.pageX
+    areaBottom = event.pageY
   }
 
-  const getRectangle = () =>
-  {
-    const left = Math.min(left, right)
-    const top = Math.min(top, bottom)
-    const right = Math.max(left, right)
-    const bottom = Math.max(top, bottom)
+  const getRectangle = () => {
+    const left = Math.min(areaLeft, right ? right : 0)
+    const top = Math.min(areaTop, bottom ? bottom : 0)
+    const right = Math.max(left, areaRight)
+    const bottom = Math.max(top, areaBottom)
 
-    return { left, top, right, bottom }
+    return { x: left, y: top, width: right - left, height: bottom - top }
   }
 
-  const getTextSelection = () =>
-  {
-    const regionElements = Array.from(ref.current.querySelectorAll('div[data-region-selector-id]'))
-    const regionRectangles = regionElements.map(region => region.getBoundingClientRect())
+  const intersectionRectangleToRegion = (rectangle, region) => {
+    const regionDomRect = region.getBoundingClientRect()
+
+    const left = Math.max(rectangle.x, regionDomRect.x)
+    const top = Math.max(rectangle.y, regionDomRect.y)
+    const right = Math.min(rectangle.y, regionDomRect.y)
+    const bottom = Math.min(rectangle.y, regionDomRect.y)
+
+    return {
+      top: top,
+      left: left,
+      width: right - left,
+      height: bottom - top,
+      regionId: region.getAttribute('data-region-selector-id')
+    }
+  }
+
+  const getSelectedTextFromRegion = (rectangle, region) => {
+    let regionElements = Array.from(region.querySelectorAll('*'))
+    let text = ''
+
+    regionElements.forEach((node) => {
+      node.childNodes.forEach((childNode) => {
+        if (!childNode.textContent) {
+          return;
+        }
+        if (childNode.nodeType !== 3) {
+          return;
+        }
+        const nodeRectangle = childNode.getBoundingClientRect()
+
+        if (nodeRectangle.x < rectangle.x) {
+          return;
+        }
+
+        if (nodeRectangle.y < rectangle.y) {
+          return;
+        }
+
+        if (nodeRectangle.x + nodeRectangle.width > rectangle.x + rectangle.width) {
+          return;
+        }
+
+        if (nodeRectangle.y + nodeRectangle.height > rectangle.y + rectangle.height) {
+          return;
+        }
+
+        text += node.textContent
+      })
+    })
+
+    return text
+  }
+
+  const getTextSelection = (getText:boolean = false) => {
     const rectangle = getRectangle()
-    const selectionRectangles = regionRectangles
-      .filter(coversArea(rectangle))
-      .map(regionRectangle => {
-        return relativeRectangleToRegion(rectangle, regionRectangle)
+    const regionElements = Array.from(ref.current.querySelectorAll('div[data-region-selector-id]'))
+    const regionElementsSelected = regionElements.filter(coversArea(rectangle))
+
+    const selectionRectangles = regionElementsSelected
+      .map(regionElements => {
+        return intersectionRectangleToRegion(rectangle, regionElements)
       })
 
-    // One SelectionRectangle per region
-    return undefined;
+    if(!getText)
+    {
+      return  { text: '', selectionRectangles }
+    }
+    const texts = regionElementsSelected
+      .map(regionElements => {
+        return getSelectedTextFromRegion(rectangle, regionElements)
+      })
+
+    return { text: texts.join(' '), selectionRectangles }
   }
 
-  const updateSelectionArea = (event) =>
-  {
+  const updateSelectionArea = (event) => {
     updateArea(event)
     setTextSelection(getTextSelection())
   }
 
-  const getSelectionArea = (event) => {
+  const handleTextSelection = (event) => {
     updateArea(event)
-    onTextSelection(getTextSelection())
+    onTextSelection(getTextSelection(true))
     resetArea()
-    setTextSelection(null)
   }
 
   return (
     <>
       <div role='none'
            ref={ref}
-           onMouseUp={getSelectionArea}
            onMouseDown={updateSelectionArea}
-           onMouseMove={updateSelectionArea}>
+           onMouseMove={updateSelectionArea}
+           onMouseUp={handleTextSelection}
+           onMouseLeave={resetArea}>
         {children}
       < /div>
       {textSelection &&
