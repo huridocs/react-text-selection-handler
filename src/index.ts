@@ -1,3 +1,3 @@
 export { Highlight } from './Highlight';
-export { SelectionHandler } from './SelectionHandler';
+export { HandleTextSelection } from './HandleTextSelection';
 export { SelectionRegion } from './SelectionRegion';
