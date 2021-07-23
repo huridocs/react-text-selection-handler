@@ -1,6 +1,6 @@
 {
   "name": "react-text-selection-handler",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "./dist/index.js",
   "description": "React pdf handler allows to render a PDF and handle text selection and highlights.",
   "author": "HURIDOCS",
@@ -10,7 +10,7 @@
     "node": ">=8",
     "npm": ">=5"
   },
-  "publishConfig":{
+  "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
   "scripts": {
