@@ -47,7 +47,6 @@ typings/
 # generate output
 .idea
 
-sample/dist
-sample/node_modules
 .DS_Store
 e2e/build_test_app
+dist
