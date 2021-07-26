@@ -10,6 +10,16 @@ interface SelectionHandlerProps {
 
 const notNull = <T,>(value: T | null): value is T => value !== null;
 
+const normalizedFirefoxRange = (selection: Selection) => {
+  const finalRange = selection.getRangeAt(selection.rangeCount - 1);
+  const firstRange = selection.getRangeAt(0);
+
+  const range = document.createRange();
+  range.setStart(firstRange.startContainer, firstRange.startOffset);
+  range.setEnd(finalRange.endContainer, finalRange.endOffset);
+  return range;
+};
+
 const HandleTextSelection: FunctionComponent<SelectionHandlerProps> = ({
   onSelect,
   onDeselect = () => {},
@@ -28,7 +38,8 @@ const HandleTextSelection: FunctionComponent<SelectionHandlerProps> = ({
     }
 
     const regionElements = Array.from(ref.current.querySelectorAll('div[data-region-selector-id]'));
-    const range = selection.getRangeAt(0);
+
+    const range = normalizedFirefoxRange(selection);
 
     const selectionRectangles = rangeToTextRects(range)
       .map(rectangle => {
@@ -44,7 +55,16 @@ const HandleTextSelection: FunctionComponent<SelectionHandlerProps> = ({
   };
 
   return (
-    <div role="none" ref={ref} onMouseUp={getSelection}>
+    <div
+      role="none"
+      ref={ref}
+      onMouseDown={e => {
+        if (!e.shiftKey) {
+          window.getSelection()?.removeAllRanges();
+        }
+      }}
+      onMouseUp={getSelection}
+    >
       {children}
     </div>
   );

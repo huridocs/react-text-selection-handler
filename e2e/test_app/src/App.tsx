@@ -15,7 +15,7 @@ export function App() {
   return (
     <>
       <TextSelected>{currentSelection.text}</TextSelected>
-      <div id="main" style={{ position: 'absolute' }}>
+      <div>
         <HandleTextSelection
           onSelect={selection => {
             setSelection(selection);
@@ -24,32 +24,42 @@ export function App() {
             setSelection({ text: 'UNSELECTED', selectionRectangles: [] });
           }}
         >
-          <Page>
-            <SelectionRegion regionId="1">
-              <Highlight textSelection={currentSelection} />
-              <LoremIpsum />
-              <div
-                style={{
-                  height: '30px',
-                  width: '30px',
-                  border: '1px solid red',
-                }}
-              />
-            </SelectionRegion>
-          </Page>
-          <Page>
-            <SelectionRegion regionId="2">
-              <BatmanLogo />
-              <Highlight textSelection={currentSelection} />
-              <LoremIpsum />
-            </SelectionRegion>
-          </Page>
-          <Page>
-            <SelectionRegion regionId="3">
-              <Highlight textSelection={currentSelection} />
-              <LoremIpsum />
-            </SelectionRegion>
-          </Page>
+          <div id="main-test" style={{ position: 'absolute' }}>
+            <Page>
+              <SelectionRegion regionId="1">
+                <Highlight textSelection={currentSelection} />
+                <LoremIpsum />
+                <div
+                  style={{
+                    height: '30px',
+                    width: '30px',
+                    border: '1px solid red',
+                  }}
+                />
+              </SelectionRegion>
+            </Page>
+            <Page>
+              <SelectionRegion regionId="2">
+                <BatmanLogo />
+                <Highlight textSelection={currentSelection} />
+                <LoremIpsum />
+              </SelectionRegion>
+            </Page>
+            <Page>
+              <SelectionRegion regionId="3">
+                <Highlight textSelection={currentSelection} />
+                <LoremIpsum />
+              </SelectionRegion>
+            </Page>
+          </div>
+          <div id="no-highlight-test" style={{ position: 'absolute', left: '550px' }}>
+            <Page>
+              <SelectionRegion regionId="4">
+                <h1>Without highlights</h1>
+                <LoremIpsum />
+              </SelectionRegion>
+            </Page>
+          </div>
         </HandleTextSelection>
       </div>
     </>
