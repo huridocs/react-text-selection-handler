@@ -3,8 +3,8 @@
     "outDir": "./dist/",
     "sourceMap": true,
     "noImplicitAny": true,
-    "module": "commonjs",
-    "target": "es5",
+    "module": "ES6",
+    "target": "ES6",
     "jsx": "react",
     "allowJs": true,
     "declaration": true,
@@ -13,9 +13,8 @@
     "maxNodeModuleJsDepth": 1,
     "lib": [
       "dom",
-      "es5",
+      "es6",
       "scripthost",
-      "dom"
     ],
     "skipLibCheck": true,
     "esModuleInterop": true,
