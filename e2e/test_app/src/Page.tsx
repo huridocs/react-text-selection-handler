@@ -1,6 +1,6 @@
 import React, { CSSProperties, FunctionComponent } from 'react';
 
-export const Page: FunctionComponent = ({ children }) => {
+export const Page = ({ children }: { children: React.ReactNode }) => {
   const styles: CSSProperties = {
     width: '300px',
     border: '1px solid red',

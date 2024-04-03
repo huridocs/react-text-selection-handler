@@ -6,6 +6,7 @@ import { domRectToSelectionRectangle, TextSelection } from './TextSelection';
 interface SelectionHandlerProps {
   onSelect: (textSelection: TextSelection) => any;
   onDeselect?: () => any;
+  children?: React.ReactNode;
 }
 
 const notNull = <T,>(value: T | null): value is T => value !== null;
