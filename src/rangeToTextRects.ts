@@ -3,7 +3,13 @@ export const rangeToTextRects = (range: Range) => {
     range.commonAncestorContainer,
     NodeFilter.SHOW_TEXT
   );
-
+  
+  const selection: Selection | null = window.getSelection();
+  if ( selection === null )
+    return [];
+  
+  let extentNode = selection.focusNode?.childNodes?.length || 0 > 1 ? selection.anchorNode : selection.focusNode;
+  
   const nodes = [];
   while (textNodeIterator.nextNode()) {
     const isValidNode = !(
@@ -12,7 +18,8 @@ export const rangeToTextRects = (range: Range) => {
     if (isValidNode) {
       nodes.push(textNodeIterator.referenceNode);
     }
-    if (textNodeIterator.referenceNode === range.endContainer) break;
+    if (extentNode === textNodeIterator.referenceNode || extentNode === textNodeIterator.referenceNode.parentElement )
+      break;
   }
 
   return nodes.reduce<DOMRect[]>((rects, n, index) => {
@@ -23,7 +30,7 @@ export const rangeToTextRects = (range: Range) => {
     }
     if (index === nodes.length - 1) {
       // @ts-ignore
-      myRange.setEnd(n, Math.min(range.startOffset, n.length - 1));
+      myRange.setEnd(n, Math.min(range.endOffset, n.length));
     }
     return [...rects, ...Array.from(myRange.getClientRects())];
   }, []);
