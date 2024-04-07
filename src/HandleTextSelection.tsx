@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useRef, useState } from 'react';
+import React, { FunctionComponent, useEffect, useRef } from 'react';
 import { elementContainsDomRect } from './elementContainsDomRect';
 import { rangeToTextRects } from './rangeToTextRects';
 import { domRectToSelectionRectangle, TextSelection } from './TextSelection';

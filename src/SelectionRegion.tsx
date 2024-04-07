@@ -4,7 +4,7 @@ export const SelectionRegionContext = React.createContext('');
 
 interface SelectionRegionProps {
   regionId?: string;
-  children?: React.ReactNode
+  children?: React.ReactNode;
 }
 
 const SelectionRegion: FunctionComponent<SelectionRegionProps> = ({
