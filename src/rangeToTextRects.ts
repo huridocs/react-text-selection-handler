@@ -34,7 +34,7 @@ export const rangeToTextRects = (range: Range) => {
       myRange.setStart(n, range.startOffset);
     }
     if (index === nodes.length - 1) {
-      // @ts-expect-error
+      // @ts-expect-error given n is expected to be a string length property exists
       myRange.setEnd(n, !extended ? range.endOffset : n.length);
     }
     return [...rects, ...Array.from(myRange.getClientRects())];
