@@ -8,7 +8,9 @@ export const rangeToTextRects = (range: Range) => {
   if (selection === null) return [];
 
   const extended = selection.focusNode?.childNodes?.length || 0 > 1;
-  const extentNode = extended ? selection.anchorNode : selection.focusNode;
+  const position = selection.anchorNode?.compareDocumentPosition(selection.focusNode!) === 4 ? 'FOLLOWING': 'PRECEDING';
+
+  const extentNode = extended || position === "PRECEDING" ? selection.anchorNode : selection.focusNode;
 
   const nodes = [];
   while (textNodeIterator.nextNode()) {
