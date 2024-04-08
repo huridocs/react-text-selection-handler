@@ -32,7 +32,7 @@ export const rangeToTextRects = (range: Range) => {
       myRange.setStart(n, range.startOffset);
     }
     if (index === nodes.length - 1) {
-      // @ts-ignore
+      // @ts-expect-error
       myRange.setEnd(n, !extended ? range.endOffset : n.length);
     }
     return [...rects, ...Array.from(myRange.getClientRects())];
