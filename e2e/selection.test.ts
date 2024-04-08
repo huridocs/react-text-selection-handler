@@ -30,18 +30,15 @@ describe('Text selection', () => {
   const { mouse } = page;
   const clickOutsideOfViewPort = async () => mouse.click(1999, 1999);
 
-  it('should highlight a word on dbl click', async () => {
-    await mouse.click(175, 93, { clickCount: 2 });
-    await clickOutsideOfViewPort();
-
+  it('should highlight a word on double click', async () => {
+    await mouse.click(175, 93, { clickCount: 2, delay: 10 });
     await selectionSnapshot();
-
     const textSelected = await (await querySelector('#textSelected')).screenshot();
     expect(textSelected).toMatchImageSnapshot();
   });
 
   it('should unselect when there is no range selected on mouse up', async () => {
-    await mouse.click(175, 93, { clickCount: 2 });
+    await mouse.click(175, 93, { clickCount: 2, delay: 10 });
     await mouse.click(175, 250);
 
     const text = await (await querySelector('#textSelected')).evaluate(el => el.textContent);
@@ -65,7 +62,6 @@ describe('Text selection', () => {
     await mouse.down();
     await mouse.move(50, 140);
     await mouse.up();
-    await clickOutsideOfViewPort();
 
     await selectionSnapshot();
   });
@@ -75,7 +71,6 @@ describe('Text selection', () => {
     await mouse.down();
     await mouse.move(175, 550);
     await mouse.up();
-    await clickOutsideOfViewPort();
 
     await selectionSnapshot();
   });
@@ -85,7 +80,6 @@ describe('Text selection', () => {
     await mouse.down();
     await mouse.move(150, 634);
     await mouse.up();
-    await mouse.click(999, 999);
 
     await selectionSnapshot();
   });
@@ -95,7 +89,6 @@ describe('Text selection', () => {
     await mouse.down();
     await mouse.move(175, 1000);
     await mouse.up();
-    await clickOutsideOfViewPort();
 
     await selectionSnapshot();
   });
