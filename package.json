@@ -18,7 +18,7 @@
     "before_publish": "yarn eslint && yarn check-types && yarn test",
     "publish_to_npm": "np --testScript before_publish",
     "build-test-app": "webpack --config ./e2e/webpack.config.js",
-    "test": "yarn build-test-app && jest --projects e2e/jest.e2e.config.ts",
+    "test": "yarn build && yarn build-test-app && jest --projects e2e/jest.e2e.config.ts",
     "build": "tsc --build tsconfig.build.json",
     "eslint": "./node_modules/.bin/eslint e2e src --quiet --ext ts,tsx",
     "check-types": "tsc --noEmit --pretty"
