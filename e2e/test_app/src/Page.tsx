@@ -1,4 +1,4 @@
-import React, { CSSProperties, FunctionComponent } from 'react';
+import React, { CSSProperties } from 'react';
 
 export const Page = ({ children }: { children: React.ReactNode }) => {
   const styles: CSSProperties = {

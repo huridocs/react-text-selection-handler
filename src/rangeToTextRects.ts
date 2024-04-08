@@ -8,9 +8,13 @@ export const rangeToTextRects = (range: Range) => {
   if (selection === null) return [];
 
   const extended = selection.focusNode?.childNodes?.length || 0 > 1;
-  const position = selection.anchorNode?.compareDocumentPosition(selection.focusNode!) === 4 ? 'FOLLOWING': 'PRECEDING';
+  const position =
+    selection.anchorNode?.compareDocumentPosition(selection.focusNode!) === 4
+      ? 'FOLLOWING'
+      : 'PRECEDING';
 
-  const extentNode = extended || position === "PRECEDING" ? selection.anchorNode : selection.focusNode;
+  const extentNode =
+    extended || position === 'PRECEDING' ? selection.anchorNode : selection.focusNode;
 
   const nodes = [];
   while (textNodeIterator.nextNode()) {
@@ -34,7 +38,7 @@ export const rangeToTextRects = (range: Range) => {
       myRange.setStart(n, range.startOffset);
     }
     if (index === nodes.length - 1) {
-      // @ts-expect-error
+      // @ts-expect-error - TS cannot now if Node is a text node, but this in handling text selections, so it's safe to assume it's a text node
       myRange.setEnd(n, !extended ? range.endOffset : n.length);
     }
     return [...rects, ...Array.from(myRange.getClientRects())];

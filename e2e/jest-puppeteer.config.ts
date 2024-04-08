@@ -1,3 +1,4 @@
+/* eslint-disable import/no-default-export */
 export default {
   launch: {
     dumpio: false,

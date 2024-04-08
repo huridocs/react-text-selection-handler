@@ -28,7 +28,6 @@ describe('Text selection', () => {
   };
 
   const { mouse } = page;
-  const clickOutsideOfViewPort = async () => mouse.click(1999, 1999);
 
   it('should highlight a word on double click', async () => {
     await mouse.click(175, 93, { clickCount: 2, delay: 10 });

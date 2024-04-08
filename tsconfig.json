@@ -11,11 +11,7 @@
     "declarationMap": true,
     "checkJs": false,
     "maxNodeModuleJsDepth": 1,
-    "lib": [
-      "dom",
-      "es6",
-      "scripthost",
-    ],
+    "lib": ["dom", "es6", "scripthost"],
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -26,8 +22,5 @@
     "isolatedModules": false,
     "noEmit": false
   },
-  "include": [
-    "src",
-    "e2e"
-  ]
+  "include": ["src", "e2e"]
 }
