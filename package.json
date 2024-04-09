@@ -36,7 +36,6 @@
     "@babel/preset-typescript": "^7.24.1",
     "@babel/runtime": "^7.24.4",
     "@testing-library/react": "^14.2.2",
-    "@types/expect-puppeteer": "^5.0.6",
     "@types/jest": "^29.5.12",
     "@types/jest-environment-puppeteer": "^5.0.6",
     "@types/jest-image-snapshot": "^6.4.0",
