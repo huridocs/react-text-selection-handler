@@ -7,7 +7,7 @@ import { TextSelected } from './TextSelected';
 import { Highlight, HandleTextSelection, SelectionRegion } from '../../../src';
 import { TextSelection } from '../../../src/TextSelection';
 
-export function App() {
+export const App = () => {
   const [currentSelection, setSelection] = useState<TextSelection>({
     selectionRectangles: [],
     text: '',
@@ -64,4 +64,4 @@ export function App() {
       </div>
     </>
   );
-}
+};

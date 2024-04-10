@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect, useRef } from 'react';
 import { elementContainsDomRect } from './elementContainsDomRect';
 import { rangeToTextRects } from './rangeToTextRects';
 import { domRectToSelectionRectangle, TextSelection } from './TextSelection';
@@ -6,6 +6,7 @@ import { domRectToSelectionRectangle, TextSelection } from './TextSelection';
 interface SelectionHandlerProps {
   onSelect: (textSelection: TextSelection) => any;
   onDeselect?: () => any;
+  children?: React.ReactNode;
 }
 
 const notNull = <T,>(value: T | null): value is T => value !== null;
@@ -22,20 +23,34 @@ const normalizedFirefoxRange = (selection: Selection) => {
 
 const HandleTextSelection: FunctionComponent<SelectionHandlerProps> = ({
   onSelect,
-  onDeselect = () => {},
+  onDeselect,
   children,
 }) => {
-  const ref = React.useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
+  const hasSelected = useRef(false);
+
+  const deselectionHandler = () => {
+    if (onDeselect && hasSelected.current) {
+      onDeselect();
+      hasSelected.current = false;
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('selectionchange', deselectionHandler);
+    return () => {
+      document.removeEventListener('selectionchange', deselectionHandler);
+    };
+  }, []);
 
   const getSelection = () => {
     const selection = window.getSelection();
-    if (!ref.current) {
+
+    if (!ref.current || !selection?.toString().trim()) {
       return;
     }
-    if (!selection?.toString().trim()) {
-      onDeselect();
-      return;
-    }
+
+    hasSelected.current = true;
 
     const regionElements = Array.from(ref.current.querySelectorAll('div[data-region-selector-id]'));
 

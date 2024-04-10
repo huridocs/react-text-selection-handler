@@ -1,6 +1,6 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 
-export const TextSelected: FunctionComponent = ({ children }) => (
+export const TextSelected = ({ children }: { children?: React.ReactNode }) => (
   <div
     id="textSelected"
     style={{

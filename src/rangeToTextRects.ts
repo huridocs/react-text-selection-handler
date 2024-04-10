@@ -4,6 +4,18 @@ export const rangeToTextRects = (range: Range) => {
     NodeFilter.SHOW_TEXT
   );
 
+  const selection: Selection | null = window.getSelection();
+  if (selection === null) return [];
+
+  const extended = selection.focusNode?.childNodes?.length || 0 > 1;
+  const position =
+    selection.anchorNode?.compareDocumentPosition(selection.focusNode!) === 4
+      ? 'FOLLOWING'
+      : 'PRECEDING';
+
+  const extentNode =
+    extended || position === 'PRECEDING' ? selection.anchorNode : selection.focusNode;
+
   const nodes = [];
   while (textNodeIterator.nextNode()) {
     const isValidNode = !(
@@ -12,7 +24,11 @@ export const rangeToTextRects = (range: Range) => {
     if (isValidNode) {
       nodes.push(textNodeIterator.referenceNode);
     }
-    if (textNodeIterator.referenceNode === range.endContainer) break;
+    if (
+      extentNode === textNodeIterator.referenceNode ||
+      extentNode === textNodeIterator.referenceNode.parentElement
+    )
+      break;
   }
 
   return nodes.reduce<DOMRect[]>((rects, n, index) => {
@@ -22,7 +38,8 @@ export const rangeToTextRects = (range: Range) => {
       myRange.setStart(n, range.startOffset);
     }
     if (index === nodes.length - 1) {
-      myRange.setEnd(n, range.endOffset);
+      // @ts-expect-error - TS cannot now if Node is a text node, but this in handling text selections, so it's safe to assume it's a text node
+      myRange.setEnd(n, !extended ? range.endOffset : n.length);
     }
     return [...rects, ...Array.from(myRange.getClientRects())];
   }, []);
