@@ -3,8 +3,7 @@
   "version": "0.2.6",
   "main": "./dist/index.js",
   "np": {
-    "testScript": "unit-test",
-    "contents": "dist"
+    "contents": "./dist"
   },
   "description": "React pdf handler allows to render a PDF and handle text selection and highlights.",
   "author": "HURIDOCS",
