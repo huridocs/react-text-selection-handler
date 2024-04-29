@@ -2,6 +2,10 @@
   "name": "@huridocs/react-text-selection-handler",
   "version": "0.2.5",
   "main": "./dist/index.js",
+  "np": {
+		"testScript": "unit-test",
+		"contents": "dist"
+	},
   "description": "React pdf handler allows to render a PDF and handle text selection and highlights.",
   "author": "HURIDOCS",
   "license": "Apache-2.0",
