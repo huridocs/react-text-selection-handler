@@ -31,6 +31,7 @@ describe('Text selection', () => {
 
   it('should highlight a word on double click', async () => {
     await mouse.click(175, 93, { clickCount: 2, delay: 10 });
+    
     await selectionSnapshot();
     const textSelected = await (await querySelector('#textSelected')).screenshot();
     expect(textSelected).toMatchImageSnapshot();
@@ -88,7 +89,8 @@ describe('Text selection', () => {
     await mouse.down();
     await mouse.move(175, 1000);
     await mouse.up();
-
+    await page.mainFrame().focus('div');
+    await page.keyboard.press('Tab');
     await selectionSnapshot();
   });
 });
