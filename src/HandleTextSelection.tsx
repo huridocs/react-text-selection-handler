@@ -60,11 +60,19 @@ const HandleTextSelection: FunctionComponent<SelectionHandlerProps> = ({
       role="none"
       ref={ref}
       onMouseDown={e => {
+        if (e.button !== 0) {
+          return;
+        }
         if (!e.shiftKey) {
           window.getSelection()?.removeAllRanges();
         }
       }}
-      onMouseUp={getSelection}
+      onMouseUp={e => {
+        if (e.button !== 0) {
+          return;
+        }
+        getSelection();
+      }}
     >
       {children}
     </div>

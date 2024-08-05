@@ -31,7 +31,7 @@ describe('Text selection', () => {
 
   it('should highlight a word on double click', async () => {
     await mouse.click(175, 93, { clickCount: 2, delay: 10 });
-    
+
     await selectionSnapshot();
     const textSelected = await (await querySelector('#textSelected')).screenshot();
     expect(textSelected).toMatchImageSnapshot();
@@ -92,5 +92,21 @@ describe('Text selection', () => {
     await page.mainFrame().focus('div');
     await page.keyboard.press('Tab');
     await selectionSnapshot();
+  });
+
+  it('should not loose selecions when right clicking', async () => {
+    await mouse.move(13, 15);
+    await mouse.down();
+    await mouse.move(150, 15);
+    await mouse.up();
+    await mouse.click(140, 15, { button: 'right', delay: 100 });
+
+    await (
+      await querySelector('#textSelected')
+    )
+      .evaluate(el => el.textContent)
+      .then(text => {
+        expect(text).toBe('Nulla vestibulum eget');
+      });
   });
 });
