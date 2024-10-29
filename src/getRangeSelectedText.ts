@@ -14,6 +14,35 @@ const getLeafNodes = (node: Node): Node[] => {
   );
 };
 
+const escapeRegExp = (str: string) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+export const normalizeSpaces = (text: string) => {
+  const pairedCharacters = {
+    '(': ')',
+    '[': ']',
+    '{': '}',
+    '"': '"',
+    "'": "'",
+  };
+
+  let result = text;
+
+  Object.entries(pairedCharacters).forEach(([openChar, closeChar]) => {
+    const escapedOpen = escapeRegExp(openChar);
+    const escapedClose = escapeRegExp(closeChar);
+    const pattern = new RegExp(`${escapedOpen}\\s*(.*?)\\s*${escapedClose}`, 'g');
+    result = result.replace(pattern, `${openChar}$1${closeChar}`);
+  });
+
+  const spaceAfterChars = escapeRegExp('$£€@#');
+  const spaceBeforeChars = escapeRegExp(',.!?:;');
+
+  result = result.replace(new RegExp(`([${spaceAfterChars}])\\s+`, 'g'), '$1');
+  result = result.replace(new RegExp(`\\s+([${spaceBeforeChars}])`, 'g'), '$1');
+
+  return result;
+};
+
 export const getRangeSelectedText = (range: Range, containerElement: HTMLElement): string => {
   const rangeContent: DocumentFragment = range.cloneContents();
   const elements = getLeafNodes(rangeContent)
@@ -32,5 +61,5 @@ export const getRangeSelectedText = (range: Range, containerElement: HTMLElement
     })
     .filter(Boolean);
 
-  return elements.join(' ');
+  return normalizeSpaces(elements.join(' '));
 };
