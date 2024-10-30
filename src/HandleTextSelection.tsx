@@ -2,7 +2,7 @@ import React, { FunctionComponent, useRef, useEffect } from 'react';
 import { elementContainsDomRect } from './elementContainsDomRect';
 import { rangeToTextRects } from './rangeToTextRects';
 import { domRectToSelectionRectangle, TextSelection } from './TextSelection';
-import { getRangeSelectedText } from './getRangeSelectedText';
+import { getSelectedText } from './getSelectedText';
 
 interface SelectionHandlerProps {
   onSelect: (textSelection: TextSelection) => any;
@@ -52,17 +52,17 @@ const HandleTextSelection: FunctionComponent<SelectionHandlerProps> = ({
         return domRectToSelectionRectangle(rectangle, region);
       })
       .filter(notNull);
-    const text = getRangeSelectedText(range, ref.current);
+    const text = getSelectedText();
     onSelect({ text, selectionRectangles });
   };
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if ((event.ctrlKey || event.metaKey) && event.key === 'c') {
         event.preventDefault();
         const selection = window.getSelection();
         if (selection && selection.toString().trim() && ref.current) {
-          const range = normalizedFirefoxRange(selection);
-          const text = getRangeSelectedText(range, ref.current);
+          const text = getSelectedText();
           navigator.clipboard.writeText(text);
         }
       }
