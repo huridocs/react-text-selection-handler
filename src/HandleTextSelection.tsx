@@ -57,23 +57,28 @@ const HandleTextSelection: FunctionComponent<SelectionHandlerProps> = ({
   };
 
   useEffect(() => {
+    const refElement = ref.current;
+
+    if (!refElement) {
+      return () => {};
+    }
+
     const handleKeyDown = (event: KeyboardEvent) => {
       if ((event.ctrlKey || event.metaKey) && event.key === 'c') {
         event.preventDefault();
         const selection = window.getSelection();
-        if (selection && selection.toString().trim() && ref.current) {
+        if (selection && selection.toString().trim()) {
           const text = getSelectedText();
           navigator.clipboard.writeText(text);
         }
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
-
+    refElement.addEventListener('keydown', handleKeyDown);
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      refElement.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [ref]);
 
   return (
     <div

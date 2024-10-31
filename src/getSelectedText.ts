@@ -11,20 +11,21 @@ const prepareSelectedElements = (): HTMLElement[] => {
 
   const range = selection.getRangeAt(0);
   const selectedContent = range.cloneContents();
-  const selectedElements = selectedContent.querySelectorAll('*');
-
+  const selectedElements = Array.from(selectedContent.querySelectorAll('*')).filter(
+    element => !element.children.length
+  ) as Array<HTMLElement>;
   const elements: HTMLElement[] = [];
 
   selectedElements.forEach((element, idx) => {
-    const previousElement = selectedElements[idx - 1] as HTMLElement;
+    const previousElement = selectedElements[idx - 1];
     if (previousElement) {
-      if (isElementOnNextLine(previousElement, element as HTMLElement)) {
+      if (isElementOnNextLine(previousElement, element)) {
         const spacer = document.createElement('span');
         spacer.innerText = ' ';
         elements.push(spacer);
       }
     }
-    elements.push(element as HTMLElement);
+    elements.push(element);
   });
 
   return elements;
