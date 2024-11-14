@@ -1,7 +1,8 @@
-import React, { FunctionComponent, useRef } from 'react';
+import React, { FunctionComponent, useRef, useEffect } from 'react';
 import { elementContainsDomRect } from './elementContainsDomRect';
 import { rangeToTextRects } from './rangeToTextRects';
 import { domRectToSelectionRectangle, TextSelection } from './TextSelection';
+import { getSelectedText } from './getSelectedText';
 
 interface SelectionHandlerProps {
   onSelect: (textSelection: TextSelection) => any;
@@ -51,9 +52,33 @@ const HandleTextSelection: FunctionComponent<SelectionHandlerProps> = ({
         return domRectToSelectionRectangle(rectangle, region);
       })
       .filter(notNull);
-
-    onSelect({ text: selection.toString(), selectionRectangles });
+    const text = getSelectedText();
+    onSelect({ text, selectionRectangles });
   };
+
+  useEffect(() => {
+    const refElement = ref.current;
+
+    if (!refElement) {
+      return () => {};
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if ((event.ctrlKey || event.metaKey) && event.key === 'c') {
+        event.preventDefault();
+        const selection = window.getSelection();
+        if (selection && selection.toString().trim()) {
+          const text = getSelectedText();
+          navigator.clipboard.writeText(text);
+        }
+      }
+    };
+
+    refElement.addEventListener('keydown', handleKeyDown);
+    return () => {
+      refElement.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [ref]);
 
   return (
     <div
