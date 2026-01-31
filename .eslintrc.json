@@ -18,12 +18,15 @@
   },
   "settings": {
     "import/resolver": {
-      "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
-      }
+      "typescript": true
     }
   },
-  "plugins": ["react", "jest", "@typescript-eslint", "prettier"],
+  "plugins": [
+    "react",
+    "jest",
+    "@typescript-eslint",
+    "prettier"
+  ],
   "rules": {
     "import/extensions": "off",
     "react/require-default-props": "off",
@@ -34,7 +37,14 @@
         "unnamedComponents": "arrow-function"
       }
     ],
-    "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
+    "react/jsx-filename-extension": [
+      "error",
+      {
+        "extensions": [
+          ".tsx"
+        ]
+      }
+    ],
     "@typescript-eslint/no-explicit-any": [
       "off",
       {
@@ -44,6 +54,11 @@
     ],
     "import/prefer-default-export": "off",
     "import/no-default-export": "error",
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true
+      }
+    ]
   }
 }

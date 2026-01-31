@@ -1,4 +1,4 @@
-export { Highlight } from './Highlight';
-export { HandleTextSelection } from './HandleTextSelection';
-export { SelectionRegion } from './SelectionRegion';
-export type { TextSelection, SelectionRectangle } from './TextSelection';
+export { Highlight } from './Highlight.js';
+export { HandleTextSelection } from './HandleTextSelection.js';
+export { SelectionRegion } from './SelectionRegion.js';
+export type { TextSelection, SelectionRectangle } from './TextSelection.js';

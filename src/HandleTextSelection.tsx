@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useRef, useEffect } from 'react';
-import { elementContainsDomRect } from './elementContainsDomRect';
-import { rangeToTextRects } from './rangeToTextRects';
-import { domRectToSelectionRectangle, TextSelection } from './TextSelection';
-import { getSelectedText } from './getSelectedText';
+import { elementContainsDomRect } from './elementContainsDomRect.js';
+import { rangeToTextRects } from './rangeToTextRects.js';
+import { domRectToSelectionRectangle, TextSelection } from './TextSelection.js';
+import { getSelectedText } from './getSelectedText.js';
 
 interface SelectionHandlerProps {
   onSelect: (textSelection: TextSelection) => any;
@@ -24,7 +24,7 @@ const normalizedFirefoxRange = (selection: Selection) => {
 
 const HandleTextSelection: FunctionComponent<SelectionHandlerProps> = ({
   onSelect,
-  onDeselect = () => {},
+  onDeselect = () => { },
   children,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -60,7 +60,7 @@ const HandleTextSelection: FunctionComponent<SelectionHandlerProps> = ({
     const refElement = ref.current;
 
     if (!refElement) {
-      return () => {};
+      return () => { };
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {

@@ -1,6 +1,6 @@
 import React, { CSSProperties, FunctionComponent, useContext } from 'react';
-import { SelectionRegionContext } from './SelectionRegion';
-import { TextSelection } from './TextSelection';
+import { SelectionRegionContext } from './SelectionRegion.js';
+import { TextSelection } from './TextSelection.js';
 
 interface HighlightProps {
   textSelection: TextSelection;

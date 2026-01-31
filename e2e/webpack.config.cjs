@@ -17,6 +17,9 @@ module.exports = {
 
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    extensionAlias: {
+      '.js': ['.ts', '.tsx', '.js'],
+    },
   },
 
   plugins: [
