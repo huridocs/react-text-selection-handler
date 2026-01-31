@@ -1,7 +1,11 @@
 {
   "name": "@huridocs/react-text-selection-handler",
   "version": "0.3.1",
+  "type": "module",
   "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
   "description": "React pdf handler allows to render a PDF and handle text selection and highlights.",
   "author": "HURIDOCS",
   "license": "Apache-2.0",
@@ -20,7 +24,7 @@
     "prepublish": "yarn build",
     "before_publish": "yarn eslint && yarn check-types && yarn test",
     "publish_to_npm": "np --access=public --testScript before_publish",
-    "build-test-app": "webpack --config ./e2e/webpack.config.js",
+    "build-test-app": "webpack --config ./e2e/webpack.config.cjs",
     "test": "yarn build && yarn build-test-app && jest --projects e2e/jest.e2e.config.ts",
     "build": "tsc --build tsconfig.build.json",
     "eslint": "./node_modules/.bin/eslint e2e src --quiet --ext ts,tsx",
