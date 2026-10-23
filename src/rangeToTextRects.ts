@@ -1,46 +1,38 @@
-export const rangeToTextRects = (range: Range) => {
-  const textNodeIterator = document.createNodeIterator(
-    range.commonAncestorContainer,
-    NodeFilter.SHOW_TEXT
-  );
+const isTextNode = (node: Node): node is Text => node.nodeType === Node.TEXT_NODE;
 
-  const selection: Selection | null = window.getSelection();
-  if (selection === null) return [];
-
-  const extended = selection.focusNode?.childNodes?.length || 0 > 1;
-  const position =
-    selection.anchorNode?.compareDocumentPosition(selection.focusNode!) === 4
-      ? 'FOLLOWING'
-      : 'PRECEDING';
-
-  const extentNode =
-    extended || position === 'PRECEDING' ? selection.anchorNode : selection.focusNode;
-
-  const nodes = [];
-  while (textNodeIterator.nextNode()) {
-    const isValidNode = !(
-      nodes.length === 0 && textNodeIterator.referenceNode !== range.startContainer
-    );
-    if (isValidNode) {
-      nodes.push(textNodeIterator.referenceNode);
+// A double-click, a triple-click, or a drag that starts off a glyph puts the
+// boundary on an element. The offset is then a child index, not a character
+// index. Collect every text node the range covers, and read a character
+// offset only when the boundary container is that text node.
+const textNodesInRange = (range: Range) => {
+  const iterator = document.createNodeIterator(range.commonAncestorContainer, NodeFilter.SHOW_TEXT);
+  const nodes: Text[] = [];
+  let current = iterator.nextNode();
+  while (current) {
+    if (isTextNode(current) && current.length > 0 && range.intersectsNode(current)) {
+      nodes.push(current);
     }
-    if (
-      extentNode === textNodeIterator.referenceNode ||
-      extentNode === textNodeIterator.referenceNode.parentElement
-    )
-      break;
+    current = iterator.nextNode();
   }
-
-  return nodes.reduce<DOMRect[]>((rects, n, index) => {
-    const myRange = document.createRange();
-    myRange.selectNode(n);
-    if (index === 0) {
-      myRange.setStart(n, range.startOffset);
-    }
-    if (index === nodes.length - 1) {
-      // @ts-expect-error - TS cannot now if Node is a text node, but this in handling text selections, so it's safe to assume it's a text node
-      myRange.setEnd(n, !extended ? range.endOffset : n.length);
-    }
-    return [...rects, ...Array.from(myRange.getClientRects())];
-  }, []);
+  return nodes;
 };
+
+const clamp = (offset: number, length: number) => Math.min(Math.max(offset, 0), length);
+
+const rectsForTextNode = (range: Range, node: Text) => {
+  const start = clamp(range.startContainer === node ? range.startOffset : 0, node.length);
+  const end = clamp(range.endContainer === node ? range.endOffset : node.length, node.length);
+  if (start >= end) {
+    return [];
+  }
+  const nodeRange = document.createRange();
+  nodeRange.setStart(node, start);
+  nodeRange.setEnd(node, end);
+  return Array.from(nodeRange.getClientRects());
+};
+
+export const rangeToTextRects = (range: Range) =>
+  textNodesInRange(range).reduce<DOMRect[]>(
+    (rects, node) => [...rects, ...rectsForTextNode(range, node)],
+    []
+  );
